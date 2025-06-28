@@ -147,12 +147,12 @@ export const ROUTES = {
   forgotPassword: '/forgot-password',
   
   // Client dashboard routes
-  dashboard: '/dashboard',
-  clientProjects: '/dashboard/projects',
-  clientMessages: '/dashboard/messages',
-  clientFiles: '/dashboard/files',
-  clientInvoices: '/dashboard/invoices',
-  clientSettings: '/dashboard/settings',
+  dashboard: '/client/dashboard',
+  clientProjects: '/client/projects',
+  clientMessages: '/client/messages',
+  clientFiles: '/client/files',
+  clientInvoices: '/client/invoices',
+  clientSettings: '/client/settings',
   
   // Admin routes
   admin: '/admin',

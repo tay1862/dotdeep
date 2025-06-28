@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/contexts/AuthContext'
 import LoadingScreen from '@/components/ui/LoadingScreen'
 import { ROUTES } from '@/utils/constants'
 

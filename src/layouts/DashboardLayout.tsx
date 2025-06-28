@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { motion } from 'framer-motion'
 import { 
@@ -19,7 +19,7 @@ interface DashboardLayoutProps {
 }
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
-  const { user, signOut } = useAuth()
+  const { user, signOut, isLoading } = useAuth()
   const { language } = useLanguage()
   const location = useLocation()
   const navigate = useNavigate()
@@ -30,13 +30,27 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   }
 
   const navigationItems = [
-    { path: '/dashboard', icon: Home, label: 'Dashboard', labelLao: 'ໜ້າຫຼັກ' },
-    { path: '/dashboard/projects', icon: FolderOpen, label: 'Projects', labelLao: 'ໂຄງການ' },
-    { path: '/dashboard/messages', icon: MessageCircle, label: 'Messages', labelLao: 'ຂໍ້ຄວາມ' },
-    { path: '/dashboard/files', icon: Download, label: 'Files', labelLao: 'ໄຟລ໌' },
-    { path: '/dashboard/invoices', icon: Receipt, label: 'Invoices', labelLao: 'ໃບແຈ້ງໜີ້' },
-    { path: '/dashboard/settings', icon: Settings, label: 'Settings', labelLao: 'ການຕັ້ງຄ່າ' },
+    { path: '/client/dashboard', icon: Home, label: 'Dashboard', labelLao: 'ໜ້າຫຼັກ' },
+    { path: '/client/projects', icon: FolderOpen, label: 'Projects', labelLao: 'ໂຄງການ' },
+    { path: '/client/messages', icon: MessageCircle, label: 'Messages', labelLao: 'ຂໍ້ຄວາມ' },
+    { path: '/client/files', icon: Download, label: 'Files', labelLao: 'ໄຟລ໌' },
+    { path: '/client/invoices', icon: Receipt, label: 'Invoices', labelLao: 'ໃບແຈ້ງໜີ້' },
+    { path: '/client/settings', icon: Settings, label: 'Settings', labelLao: 'ການຕັ້ງຄ່າ' },
   ]
+
+  // Show loading state while authentication is being resolved
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-400 mx-auto"></div>
+          <p className="mt-4 text-gray-400">
+            {language === 'lo' ? 'ກຳລັງໂຫຼດ...' : 'Loading...'}
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-black text-white flex">
@@ -92,7 +106,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         <header className="bg-glass border-b border-primary-400/20 backdrop-blur-lg p-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-primary-400">
-              {navigationItems.find(item => item.path === location.pathname)?.label || 'Dashboard'}
+              {language === 'lo' 
+                ? (navigationItems.find(item => item.path === location.pathname)?.labelLao || 'ໜ້າຫຼັກ')
+                : (navigationItems.find(item => item.path === location.pathname)?.label || 'Dashboard')
+              }
             </h1>
             
             <div className="flex items-center space-x-4">

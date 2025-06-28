@@ -43,7 +43,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 import ScrollToTop from './components/ui/ScrollToTop'
 
 // Hooks
-import { useAuth } from './hooks/useAuth'
+import { useAuth } from './contexts/AuthContext'
 
 // Page Transition Variants
 const pageVariants = {
@@ -175,7 +175,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
             {/* Client Dashboard Routes */}
-            <Route path="/dashboard" element={
+            <Route path="/client/dashboard" element={
               <ProtectedRoute role="client">
                 <DashboardLayout>
                   <ClientDashboard />
@@ -183,7 +183,7 @@ function App() {
               </ProtectedRoute>
             } />
             
-            <Route path="/dashboard/projects" element={
+            <Route path="/client/projects" element={
               <ProtectedRoute role="client">
                 <DashboardLayout>
                   <ClientProjects />
@@ -191,7 +191,7 @@ function App() {
               </ProtectedRoute>
             } />
             
-            <Route path="/dashboard/messages" element={
+            <Route path="/client/messages" element={
               <ProtectedRoute role="client">
                 <DashboardLayout>
                   <ClientMessages />
@@ -199,7 +199,7 @@ function App() {
               </ProtectedRoute>
             } />
             
-            <Route path="/dashboard/files" element={
+            <Route path="/client/files" element={
               <ProtectedRoute role="client">
                 <DashboardLayout>
                   <ClientFiles />
@@ -207,7 +207,7 @@ function App() {
               </ProtectedRoute>
             } />
             
-            <Route path="/dashboard/invoices" element={
+            <Route path="/client/invoices" element={
               <ProtectedRoute role="client">
                 <DashboardLayout>
                   <ClientInvoices />
@@ -215,7 +215,7 @@ function App() {
               </ProtectedRoute>
             } />
             
-            <Route path="/dashboard/settings" element={
+            <Route path="/client/settings" element={
               <ProtectedRoute role="client">
                 <DashboardLayout>
                   <ClientSettings />

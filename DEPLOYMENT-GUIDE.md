@@ -13,7 +13,7 @@
 ### 1.2 เชื่อมต่อกับ Local Repository
 ```bash
 # เพิ่ม remote origin (แทนที่ YOUR_USERNAME ด้วยชื่อ GitHub ของคุณ)
-git remote add origin https://github.com/YOUR_USERNAME/dotdeep-design.git
+git remote add origin https://github.com/tay1862/dotdeep.git
 
 # Push ขึ้น GitHub
 git push -u origin main
