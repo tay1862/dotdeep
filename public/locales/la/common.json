@@ -1,0 +1,134 @@
+{
+  "navigation": {
+    "home": "ໜ້າຫຼັກ",
+    "portfolio": "ຜົນງານ",
+    "services": "ບໍລິການ",
+    "about": "ກ່ຽວກັບພວກເຮົາ",
+    "contact": "ຕິດຕໍ່ພວກເຮົາ",
+    "login": "ເຂົ້າສູ່ລະບົບ",
+    "register": "ລົງທະບຽນ",
+    "logout": "ອອກຈາກລະບົບ",
+    "dashboard": "ແດັສບອດ"
+  },
+  "hero": {
+    "title": "ສ້າງສັນຜົນງານທີ່ໂດດເດັ່ນ",
+    "subtitle": "ພວກເຮົາເປັນທີມງານມືອາຊີບທີ່ພ້ອມຊ່ວຍເຫຼືອທ່ານສ້າງຜົນງານທີ່ໂດດເດັ່ນແລະມີຄຸນນະພາບສູງ",
+    "cta": "ເລີ່ມໂປຣເຈັກ",
+    "viewPortfolio": "ເບິ່ງຜົນງານ"
+  },
+  "portfolio": {
+    "title": "ຜົນງານຂອງພວກເຮົາ",
+    "subtitle": "ເບິ່ງຜົນງານທີ່ພວກເຮົາໄດ້ສ້າງສຳລັບລູກຄ້າ",
+    "viewAll": "ເບິ່ງຜົນງານທັງໝົດ",
+    "viewDetails": "ເບິ່ງລາຍລະອຽດ",
+    "categories": {
+      "all": "ທັງໝົດ"
+    }
+  },
+  "services": {
+    "title": "ບໍລິການຂອງພວກເຮົາ",
+    "subtitle": "ເລືອກແພັກເກດບໍລິການທີ່ເໝາະສົມກັບຄວາມຕ້ອງການຂອງທ່ານ",
+    "viewAll": "ເບິ່ງບໍລິການທັງໝົດ",
+    "selectService": "ເລືອກບໍລິການນີ້",
+    "price": "ລາຄາ",
+    "deliveryTime": "ເວລາສົ່ງມອບ",
+    "included": "ສິ່ງທີ່ໄດ້ຮັບ",
+    "fileFormats": "ຮູບແບບໄຟລ໌"
+  },
+  "about": {
+    "title": "ກ່ຽວກັບພວກເຮົາ",
+    "subtitle": "ຮູ້ຈັກກັບທີມງານແລະປະຫວັດຄວາມເປັນມາຂອງພວກເຮົາ"
+  },
+  "contact": {
+    "title": "ຕິດຕໍ່ພວກເຮົາ",
+    "subtitle": "ພ້ອມຮັບຟັງແລະຊ່ວຍເຫຼືອທ່ານ",
+    "name": "ຊື່-ນາມສະກຸນ",
+    "email": "ອີເມວ",
+    "phone": "ເບີໂທລະສັບ",
+    "message": "ຂໍ້ຄວາມ",
+    "send": "ສົ່ງຂໍ້ຄວາມ"
+  },
+  "auth": {
+    "login": {
+      "title": "ເຂົ້າສູ່ລະບົບ",
+      "email": "ອີເມວ",
+      "password": "ລະຫັດຜ່ານ",
+      "rememberMe": "ຈື່ຂ້ອຍໄວ້",
+      "forgotPassword": "ລືມລະຫັດຜ່ານ?",
+      "loginButton": "ເຂົ້າສູ່ລະບົບ",
+      "noAccount": "ຍັງບໍ່ມີບັນຊີ?",
+      "signUp": "ລົງທະບຽນ"
+    },
+    "register": {
+      "title": "ລົງທະບຽນ",
+      "fullName": "ຊື່-ນາມສະກຸນ",
+      "email": "ອີເມວ",
+      "password": "ລະຫັດຜ່ານ",
+      "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ",
+      "registerButton": "ລົງທະບຽນ",
+      "haveAccount": "ມີບັນຊີແລ້ວ?",
+      "signIn": "ເຂົ້າສູ່ລະບົບ"
+    },
+    "forgotPassword": {
+      "title": "ລືມລະຫັດຜ່ານ",
+      "subtitle": "ໃສ່ອີເມວຂອງທ່ານເພື່ອຮັບລິ້ງຕັ້ງລະຫັດຜ່ານໃໝ່",
+      "email": "ອີເມວ",
+      "sendButton": "ສົ່ງລິ້ງ",
+      "backToLogin": "ກັບໄປໜ້າເຂົ້າສູ່ລະບົບ"
+    }
+  },
+  "dashboard": {
+    "user": {
+      "title": "ແດັສບອດຜູ້ໃຊ້",
+      "orders": "ຄຳສັ່ງຊື້ຂອງຂ້ອຍ",
+      "settings": "ຕັ້ງຄ່າບັນຊີ"
+    },
+    "admin": {
+      "title": "ແດັສບອດຜູ້ດູແລ",
+      "overview": "ພາບລວມ",
+      "portfolioManagement": "ຈັດການຜົນງານ",
+      "categoryManagement": "ຈັດການໝວດໝູ່",
+      "serviceManagement": "ຈັດການບໍລິການ",
+      "orderManagement": "ຈັດການຄຳສັ່ງຊື້",
+      "systemSettings": "ຕັ້ງຄ່າລະບົບ"
+    }
+  },
+  "order": {
+    "title": "ສັ່ງບໍລິການ",
+    "customerInfo": "ຂໍ້ມູນລູກຄ້າ",
+    "projectDetails": "ລາຍລະອຽດໂປຣເຈັກ",
+    "name": "ຊື່-ນາມສະກຸນ",
+    "email": "ອີເມວ",
+    "phone": "ເບີໂທລະສັບ",
+    "whatsapp": "ເບີ WhatsApp",
+    "contactPreference": "ຊ່ອງທາງຕິດຕໍ່ທີ່ສະດວກ",
+    "briefDescription": "ອະທິບາຍຄວາມຕ້ອງການ",
+    "sampleFile": "ໄຟລ໌ຕົວຢ່າງ (ບໍ່ເກີນ 10MB)",
+    "submitOrder": "ສົ່ງຄຳສັ່ງຊື້",
+    "status": {
+      "pending": "ລໍຖ້າການຕອບຮັບ",
+      "accepted": "ຮັບເອົາແລ້ວ",
+      "in_progress": "ກຳລັງດຳເນີນການ",
+      "completed": "ສຳເລັດແລ້ວ",
+      "rejected": "ປະຕິເສດ"
+    }
+  },
+  "common": {
+    "loading": "ກຳລັງໂຫຼດ...",
+    "error": "ເກີດຂໍ້ຜິດພາດ",
+    "success": "ສຳເລັດ",
+    "save": "ບັນທຶກ",
+    "cancel": "ຍົກເລີກ",
+    "delete": "ລຶບ",
+    "edit": "ແກ້ໄຂ",
+    "add": "ເພີ່ມ",
+    "view": "ເບິ່ງ",
+    "back": "ກັບ",
+    "next": "ຕໍ່ໄປ",
+    "previous": "ກ່ອນໜ້າ",
+    "search": "ຄົ້ນຫາ",
+    "filter": "ກັ່ນຕອງ",
+    "sort": "ຈັດລຽງ"
+  }
+}
+

@@ -1,0 +1,134 @@
+{
+  "navigation": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "title": "Create Outstanding Work",
+    "subtitle": "We are a professional team ready to help you create outstanding and high-quality work",
+    "cta": "Start Project",
+    "viewPortfolio": "View Portfolio"
+  },
+  "portfolio": {
+    "title": "Our Portfolio",
+    "subtitle": "See the work we've created for our clients",
+    "viewAll": "View All Portfolio",
+    "viewDetails": "View Details",
+    "categories": {
+      "all": "All"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Choose the service package that suits your needs",
+    "viewAll": "View All Services",
+    "selectService": "Select This Service",
+    "price": "Price",
+    "deliveryTime": "Delivery Time",
+    "included": "What's Included",
+    "fileFormats": "File Formats"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Get to know our team and our story"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Ready to listen and help you",
+    "name": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "message": "Message",
+    "send": "Send Message"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember Me",
+      "forgotPassword": "Forgot Password?",
+      "loginButton": "Login",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up"
+    },
+    "register": {
+      "title": "Register",
+      "fullName": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "registerButton": "Register",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign In"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email to receive a password reset link",
+      "email": "Email",
+      "sendButton": "Send Link",
+      "backToLogin": "Back to Login"
+    }
+  },
+  "dashboard": {
+    "user": {
+      "title": "User Dashboard",
+      "orders": "My Orders",
+      "settings": "Account Settings"
+    },
+    "admin": {
+      "title": "Admin Dashboard",
+      "overview": "Overview",
+      "portfolioManagement": "Portfolio Management",
+      "categoryManagement": "Category Management",
+      "serviceManagement": "Service Management",
+      "orderManagement": "Order Management",
+      "systemSettings": "System Settings"
+    }
+  },
+  "order": {
+    "title": "Order Service",
+    "customerInfo": "Customer Information",
+    "projectDetails": "Project Details",
+    "name": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "whatsapp": "WhatsApp Number",
+    "contactPreference": "Preferred Contact Method",
+    "briefDescription": "Describe Your Requirements",
+    "sampleFile": "Sample File (Max 10MB)",
+    "submitOrder": "Submit Order",
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "in_progress": "In Progress",
+      "completed": "Completed",
+      "rejected": "Rejected"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort"
+  }
+}
+

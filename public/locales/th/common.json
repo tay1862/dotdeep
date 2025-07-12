@@ -1,0 +1,134 @@
+{
+  "navigation": {
+    "home": "หน้าหลัก",
+    "portfolio": "ผลงาน",
+    "services": "บริการ",
+    "about": "เกี่ยวกับเรา",
+    "contact": "ติดต่อเรา",
+    "login": "เข้าสู่ระบบ",
+    "register": "สมัครสมาชิก",
+    "logout": "ออกจากระบบ",
+    "dashboard": "แดชบอร์ด"
+  },
+  "hero": {
+    "title": "สร้างผลงานที่โดดเด่น",
+    "subtitle": "เราเป็นทีมงานมืออาชีพที่พร้อมช่วยเหลือคุณสร้างผลงานที่โดดเด่นและมีคุณภาพสูง",
+    "cta": "เริ่มโปรเจกต์",
+    "viewPortfolio": "ดูผลงาน"
+  },
+  "portfolio": {
+    "title": "ผลงานของเรา",
+    "subtitle": "ดูผลงานที่เราได้สร้างสำหรับลูกค้า",
+    "viewAll": "ดูผลงานทั้งหมด",
+    "viewDetails": "ดูรายละเอียด",
+    "categories": {
+      "all": "ทั้งหมด"
+    }
+  },
+  "services": {
+    "title": "บริการของเรา",
+    "subtitle": "เลือกแพ็กเกจบริการที่เหมาะสมกับความต้องการของคุณ",
+    "viewAll": "ดูบริการทั้งหมด",
+    "selectService": "เลือกบริการนี้",
+    "price": "ราคา",
+    "deliveryTime": "เวลาส่งมอบ",
+    "included": "สิ่งที่ได้รับ",
+    "fileFormats": "รูปแบบไฟล์"
+  },
+  "about": {
+    "title": "เกี่ยวกับเรา",
+    "subtitle": "รู้จักกับทีมงานและประวัติความเป็นมาของเรา"
+  },
+  "contact": {
+    "title": "ติดต่อเรา",
+    "subtitle": "พร้อมรับฟังและช่วยเหลือคุณ",
+    "name": "ชื่อ-นามสกุล",
+    "email": "อีเมล",
+    "phone": "เบอร์โทรศัพท์",
+    "message": "ข้อความ",
+    "send": "ส่งข้อความ"
+  },
+  "auth": {
+    "login": {
+      "title": "เข้าสู่ระบบ",
+      "email": "อีเมล",
+      "password": "รหัสผ่าน",
+      "rememberMe": "จำฉันไว้",
+      "forgotPassword": "ลืมรหัสผ่าน?",
+      "loginButton": "เข้าสู่ระบบ",
+      "noAccount": "ยังไม่มีบัญชี?",
+      "signUp": "สมัครสมาชิก"
+    },
+    "register": {
+      "title": "สมัครสมาชิก",
+      "fullName": "ชื่อ-นามสกุล",
+      "email": "อีเมล",
+      "password": "รหัสผ่าน",
+      "confirmPassword": "ยืนยันรหัสผ่าน",
+      "registerButton": "สมัครสมาชิก",
+      "haveAccount": "มีบัญชีแล้ว?",
+      "signIn": "เข้าสู่ระบบ"
+    },
+    "forgotPassword": {
+      "title": "ลืมรหัสผ่าน",
+      "subtitle": "ใส่อีเมลของคุณเพื่อรับลิงก์ตั้งรหัสผ่านใหม่",
+      "email": "อีเมล",
+      "sendButton": "ส่งลิงก์",
+      "backToLogin": "กลับไปหน้าเข้าสู่ระบบ"
+    }
+  },
+  "dashboard": {
+    "user": {
+      "title": "แดชบอร์ดผู้ใช้",
+      "orders": "คำสั่งซื้อของฉัน",
+      "settings": "ตั้งค่าบัญชี"
+    },
+    "admin": {
+      "title": "แดชบอร์ดผู้ดูแล",
+      "overview": "ภาพรวม",
+      "portfolioManagement": "จัดการผลงาน",
+      "categoryManagement": "จัดการหมวดหมู่",
+      "serviceManagement": "จัดการบริการ",
+      "orderManagement": "จัดการคำสั่งซื้อ",
+      "systemSettings": "ตั้งค่าระบบ"
+    }
+  },
+  "order": {
+    "title": "สั่งบริการ",
+    "customerInfo": "ข้อมูลลูกค้า",
+    "projectDetails": "รายละเอียดโปรเจกต์",
+    "name": "ชื่อ-นามสกุล",
+    "email": "อีเมล",
+    "phone": "เบอร์โทรศัพท์",
+    "whatsapp": "เบอร์ WhatsApp",
+    "contactPreference": "ช่องทางติดต่อที่สะดวก",
+    "briefDescription": "อธิบายความต้องการ",
+    "sampleFile": "ไฟล์ตัวอย่าง (ไม่เกิน 10MB)",
+    "submitOrder": "ส่งคำสั่งซื้อ",
+    "status": {
+      "pending": "รอการตอบรับ",
+      "accepted": "รับเอาแล้ว",
+      "in_progress": "กำลังดำเนินการ",
+      "completed": "สำเร็จแล้ว",
+      "rejected": "ปฏิเสธ"
+    }
+  },
+  "common": {
+    "loading": "กำลังโหลด...",
+    "error": "เกิดข้อผิดพลาด",
+    "success": "สำเร็จ",
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "delete": "ลบ",
+    "edit": "แก้ไข",
+    "add": "เพิ่ม",
+    "view": "ดู",
+    "back": "กลับ",
+    "next": "ถัดไป",
+    "previous": "ก่อนหน้า",
+    "search": "ค้นหา",
+    "filter": "กรอง",
+    "sort": "เรียงลำดับ"
+  }
+}
+
