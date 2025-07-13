@@ -65,7 +65,9 @@
       "email": "อีเมล",
       "password": "รหัสผ่าน",
       "confirmPassword": "ยืนยันรหัสผ่าน",
+      "otpCode": "รหัส OTP",
       "registerButton": "สมัครสมาชิก",
+      "verifyOtpButton": "ยืนยัน OTP",
       "haveAccount": "มีบัญชีแล้ว?",
       "signIn": "เข้าสู่ระบบ"
     },
@@ -131,4 +133,5 @@
     "sort": "เรียงลำดับ"
   }
 }
+
 

@@ -65,7 +65,9 @@
       "email": "ອີເມວ",
       "password": "ລະຫັດຜ່ານ",
       "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ",
+      "otpCode": "ລະຫັດ OTP",
       "registerButton": "ລົງທະບຽນ",
+      "verifyOtpButton": "ຢືນຢັນ OTP",
       "haveAccount": "ມີບັນຊີແລ້ວ?",
       "signIn": "ເຂົ້າສູ່ລະບົບ"
     },
@@ -131,4 +133,5 @@
     "sort": "ຈັດລຽງ"
   }
 }
+
 

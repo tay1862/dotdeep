@@ -18,7 +18,7 @@
   },
   "portfolio": {
     "title": "Our Portfolio",
-    "subtitle": "See the work we've created for our clients",
+    "subtitle": "See the work we\`ve created for our clients",
     "viewAll": "View All Portfolio",
     "viewDetails": "View Details",
     "categories": {
@@ -32,7 +32,7 @@
     "selectService": "Select This Service",
     "price": "Price",
     "deliveryTime": "Delivery Time",
-    "included": "What's Included",
+    "included": "What\`s Included",
     "fileFormats": "File Formats"
   },
   "about": {
@@ -56,7 +56,7 @@
       "rememberMe": "Remember Me",
       "forgotPassword": "Forgot Password?",
       "loginButton": "Login",
-      "noAccount": "Don't have an account?",
+      "noAccount": "Don\`t have an account?",
       "signUp": "Sign Up"
     },
     "register": {
@@ -65,7 +65,9 @@
       "email": "Email",
       "password": "Password",
       "confirmPassword": "Confirm Password",
+      "otpCode": "OTP Code",
       "registerButton": "Register",
+      "verifyOtpButton": "Verify OTP",
       "haveAccount": "Already have an account?",
       "signIn": "Sign In"
     },
@@ -131,4 +133,5 @@
     "sort": "Sort"
   }
 }
+
 

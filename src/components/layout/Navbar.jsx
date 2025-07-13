@@ -36,7 +36,7 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-blue-600">Portfolio</h1>
+              <img src="/logo.png" alt="Dotdeep Design Logo" className="h-8 w-auto" />
             </Link>
           </div>
 

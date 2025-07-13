@@ -24,10 +24,10 @@ i18n
       caches: ['localStorage'],
     },
 
-    resources: {
-      // We'll load resources dynamically from the backend
-    }
+    ns: ["common"],
+    defaultNS: "common",
   })
 
 export default i18n
+
 

@@ -13,10 +13,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { useAuth } from '../../contexts/AuthContext'
 import { db } from '../../lib/supabase'
+import { useNavigate } from 'react-router-dom'
 
 export default function AdminDashboard() {
   const { t } = useTranslation()
-  const { userProfile } = useAuth()
+  const { userProfile, isAdmin, loading } = useAuth()
   const [stats, setStats] = useState({
     totalOrders: 0,
     pendingOrders: 0,
@@ -26,7 +27,14 @@ export default function AdminDashboard() {
     totalUsers: 0
   })
   const [recentOrders, setRecentOrders] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loadingStats, setLoadingStats] = useState(true)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!loading && !isAdmin) {
+      navigate('/login', { replace: true })
+    }
+  }, [isAdmin, loading, navigate])
 
   useEffect(() => {
     fetchDashboardData()
@@ -61,7 +69,7 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
     } finally {
-      setLoading(false)
+      setLoadingStats(false)
     }
   }
 
@@ -97,7 +105,7 @@ export default function AdminDashboard() {
     }
   }
 
-  if (loading) {
+  if (loading || loadingStats) {
     return (
       <div className="min-h-screen bg-gray-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

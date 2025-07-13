@@ -66,8 +66,10 @@ export const AuthProvider = ({ children }) => {
 
     if (error) throw error
 
-    // Create user profile in our users table
-    if (data.user) {
+    // If user is returned, it means email confirmation is not required or already confirmed
+    // If user is null but session is null and error is null, it means email confirmation is pending
+    if (data.user && data.session) {
+      // Create user profile in our users table if not already created by trigger
       await db.users.createProfile({
         id: data.user.id,
         email: data.user.email,
@@ -79,12 +81,28 @@ export const AuthProvider = ({ children }) => {
     return data
   }
 
+  const verifyOtp = async (email, token) => {
+    const { data, error } = await auth.verifyOtp({
+      email,
+      token,
+      type: 'email'
+    })
+    if (error) throw error
+    return data
+  }
+
   const signIn = async (email, password) => {
     const { data, error } = await auth.signInWithPassword({
       email,
       password
     })
     if (error) throw error
+    
+    // Fetch user profile after successful login
+    if (data.user) {
+      await fetchUserProfile(data.user.id)
+    }
+
     return data
   }
 
@@ -112,6 +130,7 @@ export const AuthProvider = ({ children }) => {
     userProfile,
     loading,
     signUp,
+    verifyOtp,
     signIn,
     signOut,
     resetPassword,
@@ -125,4 +144,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   )
 }
+
+
 
