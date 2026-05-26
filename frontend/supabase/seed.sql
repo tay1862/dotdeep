@@ -9,11 +9,11 @@
 insert into public.site_settings (id, contact_email, contact_phone, address, google_maps_embed, social_links)
 values (
   'main',
-  'hello@dotdeep.io',
-  '+856 20 xxxx xxxx',
-  '{"en":"Vientiane, Laos","th":"เวียงจันทน์, ลาว","lo":"ວຽງຈັນ, ລາວ"}',
   null,
-  '{"facebook":null,"instagram":null,"tiktok":null,"whatsapp":null,"line":null,"linkedin":null}'
+  '+85659814656',
+  null,
+  null,
+  '{"facebook":"https://www.facebook.com/profile.php?id=61559046960453","instagram":null,"tiktok":null,"whatsapp":"https://wa.me/85659814656","line":"https://line.me/ti/p/~dotdeep","linkedin":null}'
 )
 on conflict (id) do update set
   contact_email     = excluded.contact_email,
@@ -28,12 +28,12 @@ on conflict (id) do update set
 insert into public.about (id, heading, vision, mission, story, story_image_url, tech_stack)
 values (
   'main',
-  '{"en":"We Create Design That Works","th":"เราสร้างงานดีไซน์ที่ใช้งานได้จริง","lo":"ພວກເຮົາສ້າງການ ອອກແບບ ທີ່ ໃຊ້ງານ ໄດ້ຈິງ"}',
-  '{"en":"To be the leading creative studio in Southeast Asia, known for designs that are not only beautiful but drive real business results.","th":"เป็นสตูดิโอสร้างสรรค์ชั้นนำในเอเชียตะวันออกเฉียงใต้ ที่เป็นที่รู้จักในด้านการออกแบบที่ไม่เพียงแต่สวยงาม แต่ยังขับเคลื่อนผลลัพธ์ทางธุรกิจที่แท้จริง","lo":"ເປັນສຕູດິໂອ ສ້າງສັນ ຊັ້ນນໍາ ໃນ ອາຊີ ຕາ ເວັນ ອອກ ສ່ຽງ ໃຕ້"}',
-  '{"en":"To deliver exceptional creative solutions that help businesses in Laos and the region stand out, grow, and succeed through the power of thoughtful design.","th":"มอบโซลูชั่นสร้างสรรค์ที่ยอดเยี่ยมที่ช่วยให้ธุรกิจในลาวและภูมิภาคโดดเด่น เติบโต และประสบความสำเร็จผ่านพลังของการออกแบบที่รอบคอบ","lo":"ສ່ງ ມອບ ການ ແກ້ ໄຂ ທີ່ ຍອດ ຍ້ຽມ ທີ່ ຊ່ວຍ ໃຫ້ ທຸ ລະ ກິດ ໃນ ລາວ ໂດດ ເດັ່ນ ແລະ ຂະ ຫຍາຍ"}',
-  '{"en":"DotDeep Design was founded in Vientiane with a simple belief: great design should be accessible to every business. We started as a small team of passionate designers and grew into a full-service creative studio serving clients across Laos, Thailand, and beyond.","th":"DotDeep Design ก่อตั้งขึ้นในเวียงจันทน์ด้วยความเชื่อง่ายๆ ว่า การออกแบบที่ยอดเยี่ยมควรเข้าถึงได้สำหรับทุกธุรกิจ เราเริ่มต้นในฐานะทีมนักออกแบบที่มีความหลงใหลเล็กๆ และเติบโตเป็นสตูดิโอสร้างสรรค์แบบครบวงจร","lo":"DotDeep Design ກໍ່ ຕັ້ງ ໃນ ວຽງຈັນ ດ້ວຍ ຄວາມ ເຊື່ອ ງ່າຍໆ ວ່າ ການ ອອກ ແບບ ທີ່ ດີ ຄວນ ເຂົ້າ ເຖິງ ໄດ້ ສໍາ ລັບ ທຸກ ທຸ ລະ ກິດ"}',
+  '{"en":"We Create Design That Works","th":"เราสร้างงานดีไซน์ที่ใช้งานได้จริง","lo":"ພວກເຮົາສ້າງການອອກແບບທີ່ໃຊ້ງານໄດ້ຈິງ"}',
+  '{"en":"We envision a future where every business in Laos and Southeast Asia has access to world-class creative design that drives real growth and lasting impact.","th":"เราวาดฝันถึงอนาคตที่ทุกธุรกิจในลาวและเอเชียตะวันออกเฉียงใต้มีโอกาสเข้าถึงงานออกแบบระดับโลกที่ขับเคลื่อนการเติบโตและสร้างผลกระทบที่ยั่งยืน","lo":"ພວກເຮົາຝັນເຖິງອະນາຄົດທີ່ທຸລະກິດທຸກແຫ່ງໃນລາວ ແລະ ອາຊີຕາເວັນອອກສ່ຽງໃຕ້ ສາມາດເຂົ້າເຖິງການອອກແບບລະດັບໂລກທີ່ຂັບເຄື່ອນການເຕີບໂຕຢ່າງແທ້ຈິງ"}',
+  '{"en":"Our mission is to deliver exceptional creative solutions — from graphic design and web development to UI/UX and video — that help businesses stand out, connect with their audience, and grow with confidence.","th":"ภารกิจของเราคือการมอบโซลูชั่นสร้างสรรค์ที่ยอดเยี่ยม ตั้งแต่กราฟิกดีไซน์และพัฒนาเว็บ ไปจนถึง UI/UX และวิดีโอ เพื่อช่วยให้ธุรกิจโดดเด่น เชื่อมต่อกับลูกค้า และเติบโตอย่างมั่นใจ","lo":"ພາລະກິດຂອງພວກເຮົາຄືການສ່ງມອບການແກ້ໄຂທາງດ້ານການສ້າງສັນທີ່ດີເລີດ ຕັ້ງແຕ່ກຣາຟິກ, ເວັບ, UI/UX ຈົນເຖິງວິດີໂອ ເພື່ອຊ່ວຍໃຫ້ທຸລະກິດໂດດເດັ່ນ ແລະ ເຕີບໂຕຢ່າງໝັ້ນໃຈ"}',
+  '{"en":"DotDeep Design was born in Vientiane with one simple belief: every business deserves great design. What started as a small team of passionate creatives has grown into a full-service studio helping brands across Laos and the region look professional, communicate clearly, and compete with confidence.","th":"DotDeep Design ถือกำเนิดในเวียงจันทน์ด้วยความเชื่อเดียวว่า ทุกธุรกิจสมควรได้รับงานดีไซน์ที่ดี จากทีมเล็กๆ ที่เต็มไปด้วยความหลงใหล เราเติบโตเป็นสตูดิโอเต็มรูปแบบที่ช่วยให้แบรนด์ทั่วลาวและภูมิภาคดูเป็นมืออาชีพ สื่อสารได้ชัดเจน และแข่งขันได้อย่างมั่นใจ","lo":"DotDeep Design ກໍ່ຕັ້ງໃນວຽງຈັນດ້ວຍຄວາມເຊື່ອງ່າຍໆ ວ່າທຸລະກິດທຸກແຫ່ງຄວນໄດ້ຮັບການອອກແບບທີ່ດີ ຈາກທີມເລັກໆ ທີ່ເຕັມໄປດ້ວຍຄວາມຮັກ ພວກເຮົາໄດ້ເຕີບໂຕເປັນສຕູດິໂອຄົບວົງຈອນທີ່ຊ່ວຍໃຫ້ຍີ່ຫໍ້ທົ່ວລາວ ດູເປັນມືອາຊີບ ແລະ ສາມາດແຂ່ງຂັນໄດ້"}',
   null,
-  '["Figma","Adobe Illustrator","Adobe Photoshop","After Effects","Premiere Pro","Next.js","React","Tailwind CSS","Framer","Webflow"]'
+  '["Figma","Adobe Illustrator","Adobe Photoshop","After Effects","Premiere Pro","DaVinci Resolve","CapCut","Next.js","React","TypeScript","Tailwind CSS","Node.js","Supabase","Vercel","Framer","Webflow","Canva","Blender","Procreate"]'
 )
 on conflict (id) do update set
   heading         = excluded.heading,
@@ -47,12 +47,20 @@ on conflict (id) do update set
 -- Team Members
 -- ============================================================
 insert into public.team_members (id, first_name, last_name, picture_url, role, bio, social_links, order_index)
-values (
-  '1', 'DotDeep', 'Team', null,
-  '{"en":"Founder & Creative Director","th":"ผู้ก่อตั้ง & ผู้อำนวยการสร้างสรรค์","lo":"ຜູ້ກໍ່ຕັ້ງ & ຜູ້ອໍານວຍການສ້າງສັນ"}',
-  '{"en":"Passionate about creating meaningful design experiences that connect brands with their audiences.","th":"มีความหลงใหลในการสร้างประสบการณ์การออกแบบที่มีความหมายซึ่งเชื่อมโยงแบรนด์กับผู้ชม","lo":"ມີຄວາມ ຮັກໃນການ ສ້າງ ປະສົບການ ການ ອອກແບບ ທີ່ ມີ ຄວາມ ໝາຍ"}',
+values
+(
+  '1', 'ອາພິລັກ', 'ຈະເລີນຜົນ', null,
+  '{"en":"Developer & Co-Founder","th":"นักพัฒนา & ผู้ร่วมก่อตั้ง","lo":"ນັກພັດທະນາ & ຜູ້ຮ່ວມກໍ່ຕັ້ງ"}',
+  '{"en":"Full-stack developer with a passion for building fast, clean web applications that solve real problems for businesses across Laos and the region.","th":"นักพัฒนา Full-stack ผู้หลงใหลในการสร้างเว็บแอปที่รวดเร็วและสะอาด เพื่อแก้ปัญหาจริงให้กับธุรกิจทั่วลาวและภูมิภาค","lo":"ນັກພັດທະນາ Full-stack ທີ່ມີຄວາມຮັກໃນການສ້າງເວັບທີ່ໄວ ແລະ ສະອາດ ເພື່ອຊ່ວຍທຸລະກິດໃນລາວໃຫ້ເຕີບໂຕ"}',
   '{"facebook":null,"instagram":null,"linkedin":null,"tiktok":null,"whatsapp":null,"line":null}',
   0
+),
+(
+  '2', 'ສົມຈັນ', 'ໄຊຍະວົງ', null,
+  '{"en":"Graphic Designer & Co-Founder","th":"นักออกแบบกราฟิก & ผู้ร่วมก่อตั้ง","lo":"ນັກອອກແບບກຣາຟິກ & ຜູ້ຮ່ວມກໍ່ຕັ້ງ"}',
+  '{"en":"Creative graphic designer with a strong eye for brand identity and visual storytelling, dedicated to crafting designs that connect brands with their audiences.","th":"นักออกแบบกราฟิกผู้มีสายตาคมชัดด้านอัตลักษณ์แบรนด์และการเล่าเรื่องด้วยภาพ มุ่งมั่นสร้างงานดีไซน์ที่เชื่อมโยงแบรนด์กับกลุ่มเป้าหมาย","lo":"ນັກອອກແບບກຣາຟິກທີ່ມີຕາທີ່ຄົມສຳລັບຍີ່ຫໍ້ ແລະ ການເລົ່າເລື່ອງທາງສາຍຕາ ທຸ່ມເທໃນການສ້າງດີໄຊທ໌ທີ່ເຊື່ອມໂຍງຍີ່ຫໍ້ກັບລູກຄ້າ"}',
+  '{"facebook":null,"instagram":null,"linkedin":null,"tiktok":null,"whatsapp":null,"line":null}',
+  1
 )
 on conflict (id) do update set
   first_name   = excluded.first_name,

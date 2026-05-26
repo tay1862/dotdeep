@@ -1,20 +1,16 @@
 import type {SiteSettings} from './types'
 
 export const siteSettings: SiteSettings = {
-  contactEmail: 'hello@dotdeep.io',
-  contactPhone: '+856 20 xxxx xxxx',
-  address: {
-    en: 'Vientiane, Laos',
-    th: 'เวียงจันทน์, ลาว',
-    lo: 'ວຽງຈັນ, ລາວ',
-  },
+  contactEmail: null,
+  contactPhone: '+85659814656',
+  address: null,
   googleMapsEmbed: null,
   socialLinks: {
-    facebook: null,
+    facebook: 'https://www.facebook.com/profile.php?id=61559046960453',
     instagram: null,
     tiktok: null,
-    whatsapp: null,
-    line: null,
+    whatsapp: 'https://wa.me/85659814656',
+    line: 'https://line.me/ti/p/~dotdeep',
     linkedin: null,
   },
 }

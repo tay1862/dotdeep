@@ -79,9 +79,9 @@ export interface AboutData {
 }
 
 export interface SiteSettings {
-  contactEmail: string
-  contactPhone: string
-  address: LocalizedString
+  contactEmail: string | null
+  contactPhone: string | null
+  address: LocalizedString | null
   googleMapsEmbed: string | null
   socialLinks: {
     facebook: string | null

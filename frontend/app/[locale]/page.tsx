@@ -42,7 +42,7 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
   const businessJsonLd = buildLocalBusinessJsonLd({
     email: siteSettings.contactEmail,
     phone: siteSettings.contactPhone,
-    address: siteSettings.address[l],
+    address: siteSettings.address?.[l] ?? undefined,
   })
 
   return (
