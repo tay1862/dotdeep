@@ -1,12 +1,13 @@
 import {redirect} from 'next/navigation'
-import {getAdminSession} from '@/app/lib/admin-auth'
+import {createSupabaseServerClient} from '@/app/lib/supabase-server'
 import Sidebar from './_components/Sidebar'
 
 export const metadata = {title: 'Admin — DotDeep'}
 
 export default async function AdminLayout({children}: {children: React.ReactNode}) {
-  const isAuth = await getAdminSession()
-  if (!isAuth) redirect('/admin/login')
+  const supabase = await createSupabaseServerClient()
+  const {data: {user}} = await supabase.auth.getUser()
+  if (!user) redirect('/admin/login')
 
   return (
     <div className="flex min-h-screen bg-zinc-950 text-white">

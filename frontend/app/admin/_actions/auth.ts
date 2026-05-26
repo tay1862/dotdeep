@@ -1,18 +1,24 @@
 'use server'
 
 import {redirect} from 'next/navigation'
-import {checkPassword, createAdminSession, destroyAdminSession} from '@/app/lib/admin-auth'
+import {createSupabaseServerClient} from '@/app/lib/supabase-server'
 
 export async function loginAction(_: unknown, formData: FormData) {
+  const email = formData.get('email') as string
   const password = formData.get('password') as string
-  if (!checkPassword(password)) {
-    return {error: 'Incorrect password'}
+
+  const supabase = await createSupabaseServerClient()
+  const {error} = await supabase.auth.signInWithPassword({email, password})
+
+  if (error) {
+    return {error: 'Incorrect email or password'}
   }
-  await createAdminSession()
+
   redirect('/admin')
 }
 
 export async function logoutAction() {
-  await destroyAdminSession()
+  const supabase = await createSupabaseServerClient()
+  await supabase.auth.signOut()
   redirect('/admin/login')
 }

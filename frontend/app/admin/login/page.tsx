@@ -15,6 +15,21 @@ export default function AdminLoginPage() {
         </div>
         <form action={action} className="space-y-4">
           <div>
+            <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-1.5">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autoFocus
+              autoComplete="email"
+              className="w-full px-3 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              placeholder="admin@dotdeep.io"
+            />
+          </div>
+          <div>
             <label htmlFor="password" className="block text-sm font-medium text-zinc-300 mb-1.5">
               Password
             </label>
@@ -23,7 +38,7 @@ export default function AdminLoginPage() {
               name="password"
               type="password"
               required
-              autoFocus
+              autoComplete="current-password"
               className="w-full px-3 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               placeholder="••••••••"
             />
