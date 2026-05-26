@@ -1,7 +1,7 @@
 import {getTranslations} from 'next-intl/server'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
-import {team} from '@/app/data/team'
+import {getTeam} from '@/app/lib/db/team'
 import TeamGrid from '@/app/components/team/TeamGrid'
 
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}) {
@@ -17,6 +17,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 
 export default async function TeamPage({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params
+  const team = await getTeam()
 
   return (
     <section className="py-16 lg:py-24">

@@ -9,7 +9,7 @@ import {getLocale} from 'next-intl/server'
 
 import {buildRootRedirectAlternates} from '@/app/lib/metadata'
 import {getSiteOrigin, sanitizeExternalUrl} from '@/app/lib/urls'
-import {siteSettings} from '@/app/data/settings'
+import {getSiteSettings} from '@/app/lib/db/settings'
 
 /**
  * Generate metadata for the page.
@@ -140,6 +140,7 @@ const notoSansLao = Noto_Sans_Lao({
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const locale = await getLocale()
   const siteUrl = getSiteOrigin()
+  const siteSettings = await getSiteSettings()
   const sameAs = [
     siteSettings.socialLinks.facebook,
     siteSettings.socialLinks.instagram,

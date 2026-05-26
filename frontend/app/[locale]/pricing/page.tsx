@@ -2,7 +2,7 @@ import {getTranslations} from 'next-intl/server'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
 import {buildBreadcrumbJsonLd} from '@/app/lib/structured-data'
-import {allPricingItems} from '@/app/data/pricing'
+import {getAllPricingItems} from '@/app/lib/db/pricing'
 import PricingGrid from '@/app/components/pricing/PricingGrid'
 
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}) {
@@ -19,6 +19,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 export default async function PricingPage({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params
   const t = await getTranslations({locale, namespace: 'pricing'})
+  const allPricingItems = await getAllPricingItems()
 
   const breadcrumb = buildBreadcrumbJsonLd(
     [{name: 'Home', path: '/'}, {name: t('title'), path: '/pricing'}],

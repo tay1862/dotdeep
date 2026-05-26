@@ -7,7 +7,7 @@ import Footer from '@/app/components/Footer'
 import FloatingButtons from '@/app/components/FloatingButtons'
 import CustomCursor from '@/app/components/CustomCursor'
 import {locales} from '@/i18n/config'
-import {siteSettings} from '@/app/data/settings'
+import {getSiteSettings} from '@/app/lib/db/settings'
 
 export function generateStaticParams() {
   return locales.map((locale) => ({locale}))
@@ -23,7 +23,10 @@ export default async function LocaleLayout({
   const {locale} = await params
   if (!hasLocale(locales, locale)) notFound()
 
-  const messages = (await import(`@/i18n/messages/${locale}.json`)).default
+  const [messages, settings] = await Promise.all([
+    import(`@/i18n/messages/${locale}.json`).then((m) => m.default),
+    getSiteSettings(),
+  ])
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
@@ -32,8 +35,8 @@ export default async function LocaleLayout({
         <Toaster />
         <Header locale={locale} />
         <main className="flex-1 pt-20">{children}</main>
-        <Footer locale={locale} settings={siteSettings} />
-        <FloatingButtons settings={siteSettings} />
+        <Footer locale={locale} settings={settings} />
+        <FloatingButtons settings={settings} />
       </div>
     </NextIntlClientProvider>
   )

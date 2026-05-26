@@ -2,7 +2,7 @@ import {getTranslations} from 'next-intl/server'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
 import {buildBreadcrumbJsonLd} from '@/app/lib/structured-data'
-import {services} from '@/app/data/services'
+import {getServices} from '@/app/lib/db/services'
 import ServicesList from '@/app/components/services/ServicesList'
 
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}) {
@@ -19,6 +19,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 export default async function ServicesPage({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params
   const t = await getTranslations({locale, namespace: 'services'})
+  const services = await getServices()
 
   const breadcrumb = buildBreadcrumbJsonLd(
     [{name: 'Home', path: '/'}, {name: t('title'), path: '/services'}],

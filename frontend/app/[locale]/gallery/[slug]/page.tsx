@@ -1,16 +1,17 @@
 import {notFound} from 'next/navigation'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
-import {projects, getProjectBySlug} from '@/app/data/projects'
+import {getProjects, getProjectBySlug} from '@/app/lib/db/projects'
 import ProjectDetail from '@/app/components/gallery/ProjectDetail'
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await getProjects()
   return projects.map((p) => ({slug: p.slug}))
 }
 
 export async function generateMetadata({params}: {params: Promise<{locale: string; slug: string}>}) {
   const {locale, slug} = await params
-  const project = getProjectBySlug(slug)
+  const project = await getProjectBySlug(slug)
   if (!project) return {}
   const l = locale as 'en' | 'th' | 'lo'
 
@@ -24,7 +25,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 
 export default async function ProjectPage({params}: {params: Promise<{locale: string; slug: string}>}) {
   const {locale, slug} = await params
-  const project = getProjectBySlug(slug)
+  const project = await getProjectBySlug(slug)
   if (!project) notFound()
 
   return <ProjectDetail project={project} locale={locale} />

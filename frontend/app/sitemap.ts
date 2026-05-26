@@ -2,10 +2,11 @@ import {MetadataRoute} from 'next'
 
 import {getSiteOrigin} from '@/app/lib/urls'
 import {locales} from '@/i18n/config'
-import {services} from '@/app/data/services'
-import {projects} from '@/app/data/projects'
+import {getServices} from '@/app/lib/db/services'
+import {getProjects} from '@/app/lib/db/projects'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [services, projects] = await Promise.all([getServices(), getProjects()])
   const staticRoutes = ['/', '/about', '/services', '/gallery', '/pricing', '/team', '/contact'] as const
   const result: MetadataRoute.Sitemap = []
   const siteUrl = getSiteOrigin()

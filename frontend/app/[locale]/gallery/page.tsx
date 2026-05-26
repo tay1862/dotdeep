@@ -2,7 +2,7 @@ import {getTranslations} from 'next-intl/server'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
 import {buildBreadcrumbJsonLd} from '@/app/lib/structured-data'
-import {projects} from '@/app/data/projects'
+import {getProjects} from '@/app/lib/db/projects'
 import GalleryGrid from '@/app/components/gallery/GalleryGrid'
 
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}) {
@@ -19,6 +19,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 export default async function GalleryPage({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params
   const t = await getTranslations({locale, namespace: 'gallery'})
+  const projects = await getProjects()
 
   const breadcrumb = buildBreadcrumbJsonLd(
     [{name: 'Home', path: '/'}, {name: t('title'), path: '/gallery'}],

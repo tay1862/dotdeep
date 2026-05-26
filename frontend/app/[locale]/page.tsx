@@ -2,9 +2,9 @@ import {getTranslations} from 'next-intl/server'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
 import {buildServiceJsonLd, buildLocalBusinessJsonLd} from '@/app/lib/structured-data'
-import {services} from '@/app/data/services'
-import {getFeaturedProjects} from '@/app/data/projects'
-import {siteSettings} from '@/app/data/settings'
+import {getServices} from '@/app/lib/db/services'
+import {getFeaturedProjects} from '@/app/lib/db/projects'
+import {getSiteSettings} from '@/app/lib/db/settings'
 import HeroSection from '@/app/components/home/HeroSection'
 import FeaturedProjects from '@/app/components/home/FeaturedProjects'
 import ServicesSummary from '@/app/components/home/ServicesSummary'
@@ -26,7 +26,11 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
   const {locale} = await params
   const l = locale as 'en' | 'th' | 'lo'
 
-  const featuredProjects = getFeaturedProjects()
+  const [services, featuredProjects, siteSettings] = await Promise.all([
+    getServices(),
+    getFeaturedProjects(),
+    getSiteSettings(),
+  ])
 
   const serviceList = services.map((s) => ({
     name: s.title[l],

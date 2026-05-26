@@ -14,7 +14,7 @@ const cspDirectives = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+  "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://qjrxjprdwjugfqnehfxo.supabase.co",
   "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://www.google.com https://www.google.com/maps",
   'upgrade-insecure-requests',
 ].join('; ')
