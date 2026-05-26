@@ -2,13 +2,13 @@
 
 import {useTranslations} from 'next-intl'
 import Link from 'next/link'
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef} from 'react'
 
 import SanityImage from '@/app/components/SanityImage'
 import ScrollReveal from '@/app/components/ScrollReveal'
+import MagneticButton from '@/app/components/MagneticButton'
 import useReducedMotion from '@/app/components/useReducedMotion'
 import {resolveLocalizedInternalPath} from '@/app/lib/urls'
-import {getLocalizedValue, type LocalizedString} from '@/sanity/lib/localized'
 
 interface HeroData {
   heroHeading?: {en?: string; th?: string; lo?: string} | null
@@ -19,92 +19,22 @@ interface HeroData {
   stats?: Array<{
     value?: string | null
     suffix?: string | null
-    label?: LocalizedString
+    label?: {en?: string | null; th?: string | null; lo?: string | null} | null
   }> | null
 }
 
-function parseStatValue(value?: string | null) {
-  const numericValue = Number.parseFloat((value || '').replace(/[^0-9.]/g, ''))
-  return Number.isFinite(numericValue) ? numericValue : null
-}
-
-function useCounter(target: number, duration = 1800, start = false, reducedMotion = false) {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    if (!start || reducedMotion) {
-      return
-    }
-
-    let startTime: number
-    let frameId = 0
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const progress = Math.min((timestamp - startTime) / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.floor(eased * target))
-      if (progress < 1) {
-        frameId = requestAnimationFrame(step)
-      }
-    }
-
-    frameId = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(frameId)
-  }, [duration, reducedMotion, start, target])
-
-  return reducedMotion ? target : count
-}
-
-function FloatingBadge({
-  value,
-  label,
-  suffix = '',
-  delay = 0,
-  className = '',
-  reducedMotion = false,
-}: {
-  value: number
-  label: string
-  suffix?: string
-  delay?: number
-  className?: string
-  reducedMotion?: boolean
-}) {
-  const [visible, setVisible] = useState(false)
-  const isVisible = reducedMotion || visible
-  const count = useCounter(value, 1600, visible, reducedMotion)
-
-  useEffect(() => {
-    if (reducedMotion) {
-      return
-    }
-
-    const t = setTimeout(() => setVisible(true), delay + 800)
-    return () => clearTimeout(t)
-  }, [delay, reducedMotion])
-
+function KineticMarquee({items}: {items: string[]}) {
   return (
-    <div
-      className={`absolute bg-surface/90 dark:bg-neutral-900/90 backdrop-blur-md border border-border-default rounded-2xl px-4 py-3 shadow-xl transition-all duration-700 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      } ${className}`}
-    >
-      <p className="text-2xl font-display font-bold text-brand-500 leading-none">
-        {count}{suffix}
-      </p>
-      <p className="text-xs text-on-surface-muted mt-0.5 whitespace-nowrap">{label}</p>
-    </div>
-  )
-}
-
-function Ticker({items}: {items: string[]}) {
-  return (
-    <div className="overflow-hidden border-y border-border-default py-3 bg-surface-raised">
-      <div className="flex gap-12 animate-[marquee_20s_linear_infinite] motion-reduce:animate-none whitespace-nowrap w-max">
-        {[...items, ...items].map((item, i) => (
-          <span key={i} className="text-xs font-medium uppercase tracking-[0.2em] text-on-surface-muted flex items-center gap-3">
-            <span className="w-1 h-1 rounded-full bg-brand-500 inline-block" />
-            {item}
+    <div className="relative overflow-hidden border-y border-border-default py-3 lg:py-4 bg-surface/80 backdrop-blur-sm">
+      <div className="flex gap-8 lg:gap-12 animate-[marquee_45s_linear_infinite] motion-reduce:animate-none whitespace-nowrap w-max">
+        {[...items, ...items, ...items].map((item, i) => (
+          <span key={i} className="flex items-center gap-8 lg:gap-12">
+            <span
+              className={`marquee-kinetic ${i % 2 === 0 ? 'solid' : ''} text-[clamp(0.65rem,1.2vw,0.8rem)] font-display font-semibold leading-none tracking-[0.15em] uppercase`}
+            >
+              {item}
+            </span>
+            <span className="text-brand-500 text-[0.6rem] leading-none opacity-60">✦</span>
           </span>
         ))}
       </div>
@@ -115,32 +45,50 @@ function Ticker({items}: {items: string[]}) {
 export default function HeroSection({data, locale}: {data: HeroData | null; locale: string}) {
   const t = useTranslations('hero')
   const tGallery = useTranslations('gallery')
+  const tCommon = useTranslations('common')
   const l = locale as 'en' | 'th' | 'lo'
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const prefersReducedMotion = useReducedMotion()
 
-  const heading = data?.heroHeading?.[l] || t('tagline')
-  const subheading = data?.heroSubheading?.[l] || t('subtitle')
+  const heading = t('tagline')
+  const subheading = t('subtitle')
   const ctaText = data?.heroCtaText?.[l] || t('cta')
   const ctaLink = resolveLocalizedInternalPath(data?.heroCtaLink, locale) || `/${locale}/gallery`
-  const stats =
-    data?.stats
-      ?.map((stat) => ({
-        value: parseStatValue(stat.value),
-        suffix: stat.suffix || '',
-        label: getLocalizedValue(stat.label, l, '') || '',
-      }))
-      .filter((stat): stat is {value: number; suffix: string; label: string} => stat.value != null && !!stat.label) || []
-  const featuredStats = stats.slice(0, 2)
-  const summaryStats = stats.slice(0, 3)
-  const tickerItems = [tGallery('graphic'), tGallery('web'), tGallery('uiux'), tGallery('video')]
+  const serviceItems = [tGallery('graphic'), tGallery('web'), tGallery('uiux'), tGallery('video')]
+  const statsItems = (data?.stats || []).map(
+    (s) => `${s.value ?? ''}${s.suffix ?? ''} ${s.label?.[l] ?? s.label?.en ?? ''}`.trim(),
+  ).filter(Boolean)
+  const tickerItems = [...serviceItems, ...statsItems]
+
+  // Localized labels for hero meta + bento
+  const labels = {
+    en: {
+      avail: 'We are ready',
+      eyebrow: '(01) Design Studio',
+      year: 'Est. 2024',
+      services: 'Brand · Web · UI/UX',
+      tagline: 'Every detail has meaning',
+    },
+    th: {
+      avail: 'พวกเราพร้อมแล้ว',
+      eyebrow: '(01) สตูดิโอออกแบบ',
+      year: 'ก่อตั้ง 2024',
+      services: 'แบรนด์ · เว็บ · UI/UX',
+      tagline: 'ทุกรายละเอียดมีความหมาย',
+    },
+    lo: {
+      avail: 'ພວກເຮົາພ້ອມແລ້ວ',
+      eyebrow: '(01) ສະຕູດິໂອອອກແບບ',
+      year: 'ກໍ່ຕັ້ງ 2024',
+      services: 'ແບຣນ · ເວັບ · UI/UX',
+      tagline: 'ທຸກລາຍລະອຽດ ມີຄວາມໝາຍ',
+    },
+  } as const
+  const lbl = labels[l] || labels.en
 
   // Particle canvas effect
   useEffect(() => {
-    if (prefersReducedMotion) {
-      return
-    }
-
+    if (prefersReducedMotion) return
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -148,7 +96,6 @@ export default function HeroSection({data, locale}: {data: HeroData | null; loca
 
     let animId: number
     const particles: {x: number; y: number; vx: number; vy: number; r: number; o: number}[] = []
-
     const resize = () => {
       canvas.width = canvas.offsetWidth
       canvas.height = canvas.offsetHeight
@@ -156,13 +103,13 @@ export default function HeroSection({data, locale}: {data: HeroData | null; loca
     resize()
     window.addEventListener('resize', resize)
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 50; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        r: Math.random() * 2 + 0.5,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r: Math.random() * 1.8 + 0.4,
         o: Math.random() * 0.4 + 0.1,
       })
     }
@@ -179,17 +126,16 @@ export default function HeroSection({data, locale}: {data: HeroData | null; loca
         ctx.fillStyle = `rgba(82, 130, 255, ${p.o})`
         ctx.fill()
       })
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x
           const dy = particles[i].y - particles[j].y
           const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 100) {
+          if (dist < 110) {
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(82, 130, 255, ${0.08 * (1 - dist / 100)})`
+            ctx.strokeStyle = `rgba(82, 130, 255, ${0.08 * (1 - dist / 110)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -198,187 +144,204 @@ export default function HeroSection({data, locale}: {data: HeroData | null; loca
       animId = requestAnimationFrame(draw)
     }
     draw()
-
     return () => {
       cancelAnimationFrame(animId)
       window.removeEventListener('resize', resize)
     }
   }, [prefersReducedMotion])
 
-  // Split heading for word-by-word animation
+  // Word-by-word reveal: keep last word as accent, second-to-last optional italic emphasis
   const words = prefersReducedMotion ? [heading] : heading.split(' ')
 
   return (
     <>
-      <section className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden">
-        {/* Particle canvas */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+      <section className="relative min-h-[94vh] flex flex-col justify-center overflow-hidden bg-mesh bg-grid">
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none opacity-70" />
 
-        {/* Gradient blobs */}
-        <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-brand-400/10 blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full bg-accent-400/10 blur-[80px] pointer-events-none" />
+        <div className="relative mx-auto max-w-[1400px] px-6 py-24 lg:py-28 w-full">
+          {/* Top meta strip */}
+          <ScrollReveal>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-12 lg:mb-16 text-xs uppercase tracking-[0.2em] text-on-surface-muted">
+              <div className="flex items-center gap-3">
+                <span className={`${locale === 'lo' ? 'font-lao normal-case tracking-normal text-sm' : ''}`}>
+                  {lbl.eyebrow}
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-success/10 dark:bg-success/15 border border-success/30 px-3 py-1.5">
+                <span className="avail-dot relative inline-block h-1.5 w-1.5 rounded-full bg-success" />
+                <span className={`text-success text-[11px] font-semibold ${locale === 'lo' ? 'font-lao tracking-normal normal-case text-xs' : ''}`}>
+                  {lbl.avail}
+                </span>
+              </div>
+            </div>
+          </ScrollReveal>
 
-        <div className="relative mx-auto max-w-7xl px-6 py-24 lg:py-32 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Text side */}
-            <div>
-              <ScrollReveal>
-                <div className="inline-flex items-center gap-2 rounded-full border border-brand-200 dark:border-brand-800 bg-brand-50/80 dark:bg-brand-950/50 backdrop-blur-sm px-4 py-1.5 mb-8">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500" />
-                  </span>
-                  <span className="text-xs font-semibold text-brand-700 dark:text-brand-300 uppercase tracking-widest">
-                    DotDeep Design Studio
-                  </span>
-                </div>
-              </ScrollReveal>
-
-              <h1 className={`text-fluid-3xl lg:text-fluid-4xl font-bold leading-[1.06] tracking-tight mb-6 ${locale === 'lo' ? 'font-lao' : 'font-display'}`}>
-                {words.map((word, i) => (
-                  <span
-                    key={i}
-                    className="inline-block overflow-hidden"
-                    style={{marginRight: '0.25em'}}
-                  >
-                    <span
-                      className="inline-block"
-                      style={{
-                        animation: prefersReducedMotion
-                          ? undefined
-                          : `slideUp 0.6s cubic-bezier(0.16,1,0.3,1) both`,
-                        animationDelay: prefersReducedMotion ? undefined : `${i * 80 + 200}ms`,
-                      }}
-                    >
-                      {i === words.length - 1 ? (
-                        <span className="text-brand-500">{word}</span>
-                      ) : word}
+            <div className="lg:col-span-7">
+              <h1
+                className={`mb-8 lg:mb-10 font-bold leading-[0.95] tracking-[-0.02em] ${
+                  locale === 'lo'
+                    ? 'font-lao text-[clamp(2.5rem,7vw,6rem)] leading-[1.1]'
+                    : 'font-display text-[clamp(2.75rem,8vw,7rem)]'
+                }`}
+              >
+                {words.map((word, i) => {
+                  const isLast = i === words.length - 1
+                  const isSecondLast = i === words.length - 2 && words.length > 2
+                  return (
+                    <span key={i} className="inline-block overflow-hidden align-bottom" style={{marginRight: '0.22em'}}>
+                      <span
+                        className="inline-block"
+                        style={{
+                          animation: prefersReducedMotion
+                            ? undefined
+                            : `heroSlide 0.7s cubic-bezier(0.16,1,0.3,1) both`,
+                          animationDelay: prefersReducedMotion ? undefined : `${i * 70 + 150}ms`,
+                        }}
+                      >
+                        {isLast ? (
+                          <span className="text-brand-500">{word}</span>
+                        ) : isSecondLast && locale !== 'lo' ? (
+                          <span className="font-serif italic font-normal">{word}</span>
+                        ) : (
+                          word
+                        )}
+                      </span>
                     </span>
-                  </span>
-                ))}
+                  )
+                })}
               </h1>
 
               <ScrollReveal delay={400}>
-                <p className={`text-lg lg:text-xl text-on-surface-muted max-w-lg mb-10 leading-relaxed ${locale === 'lo' ? 'font-lao' : ''}`}>
+                <p
+                  className={`text-lg lg:text-xl text-on-surface-muted max-w-xl mb-10 leading-relaxed ${
+                    locale === 'lo' ? 'font-lao' : ''
+                  }`}
+                >
                   {subheading}
                 </p>
               </ScrollReveal>
 
               <ScrollReveal delay={500}>
-                <div className="flex flex-wrap gap-4">
-                  <Link
-                    href={ctaLink}
-                    className="group inline-flex items-center gap-2 rounded-full bg-brand-500 hover:bg-brand-600 text-white px-7 py-3.5 font-semibold transition-all hover:shadow-xl hover:shadow-brand-500/30 active:scale-[0.97]"
-                  >
-                    {ctaText}
-                    <svg
-                      width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5"
-                      className="transition-transform group-hover:translate-x-0.5"
+                <div className="flex flex-wrap gap-4 items-center">
+                  <MagneticButton strength={0.3}>
+                    <Link
+                      href={ctaLink}
+                      data-magnetic
+                      className="group relative inline-flex items-center gap-3 rounded-full bg-brand-500 hover:bg-brand-600 text-white pl-7 pr-3 py-3 font-semibold transition-colors active:scale-[0.97] shadow-xl shadow-brand-500/30"
                     >
-                      <path d="m5 12 7-7M5 5h7v7" />
-                    </svg>
-                  </Link>
+                      <span>{ctaText}</span>
+                      <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                          <path d="m5 12 7-7M5 5h7v7" />
+                        </svg>
+                      </span>
+                    </Link>
+                  </MagneticButton>
+
                   <Link
                     href={`/${locale}/contact`}
-                    className="inline-flex items-center gap-2 rounded-full border border-border-default hover:border-brand-300 px-7 py-3.5 font-medium transition-all hover:bg-brand-50 dark:hover:bg-brand-950/30"
+                    className="group inline-flex items-center gap-2 px-2 py-2 font-medium text-on-surface hover:text-brand-500 transition-colors"
                   >
-                    {t('contact')}
+                    <span className="relative">
+                      {t('contact')}
+                      <span className="absolute -bottom-1 left-0 w-full h-px bg-current scale-x-100 group-hover:scale-x-0 origin-right transition-transform duration-500" />
+                      <span className="absolute -bottom-1 left-0 w-full h-px bg-brand-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 delay-150" />
+                    </span>
+                    <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform group-hover:translate-x-0.5">
+                      <path d="m5 10 4-4-4-4" />
+                    </svg>
                   </Link>
                 </div>
               </ScrollReveal>
-
-              {summaryStats.length > 0 && (
-                <ScrollReveal delay={600}>
-                  <div className="flex flex-wrap items-center gap-6 mt-10 pt-8 border-t border-border-default">
-                    {summaryStats.map((stat) => (
-                      <div key={`${stat.label}-${stat.value}`} className="flex flex-col gap-1">
-                        <span className="text-lg font-display font-semibold text-on-surface">
-                          {stat.value}
-                          {stat.suffix}
-                        </span>
-                        <span className="text-sm text-on-surface-muted">{stat.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </ScrollReveal>
-              )}
             </div>
 
-            {/* Visual side */}
-            <ScrollReveal delay={200} className="relative">
-              <div className="relative">
-                {/* Main image card */}
-                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-brand-100 to-brand-200 dark:from-brand-900 dark:to-brand-800 shadow-2xl">
+            {/* Bento visual side */}
+            <ScrollReveal delay={200} className="lg:col-span-5">
+              <div className="grid grid-cols-6 grid-rows-6 gap-3 aspect-square max-w-md mx-auto lg:max-w-none">
+                {/* Main image card (3 cols x 4 rows) */}
+                <div className="col-span-4 row-span-4 relative rounded-3xl overflow-hidden bg-gradient-to-br from-brand-100 to-brand-200 dark:from-brand-900 dark:to-brand-800 shadow-2xl group">
                   {data?.heroImage?.asset?._ref ? (
                     <SanityImage
                       source={data.heroImage}
                       alt={heading}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                       priority
-                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      sizes="(max-width: 1024px) 100vw, 33vw"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      {/* Placeholder grid of colored squares */}
                       <div className="grid grid-cols-3 gap-3 p-8 opacity-30">
                         {[...Array(9)].map((_, i) => (
                           <div
                             key={i}
                             className="aspect-square rounded-xl"
-                            style={{
-                              background: `oklch(${0.5 + i * 0.04} 0.2 ${264 + i * 10})`,
-                            }}
+                            style={{background: `oklch(${0.5 + i * 0.04} 0.2 ${264 + i * 10})`}}
                           />
                         ))}
                       </div>
                     </div>
                   )}
-
-                  {/* Gradient overlay at bottom */}
-                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 text-white text-xs uppercase tracking-widest opacity-90">
+                    Selected work
+                  </div>
                 </div>
 
-                {featuredStats[0] ? (
-                  <FloatingBadge
-                    value={featuredStats[0].value}
-                    suffix={featuredStats[0].suffix}
-                    label={featuredStats[0].label}
-                    delay={0}
-                    className="-top-4 -left-4 lg:-left-8"
-                    reducedMotion={prefersReducedMotion}
-                  />
-                ) : null}
-                {featuredStats[1] ? (
-                  <FloatingBadge
-                    value={featuredStats[1].value}
-                    suffix={featuredStats[1].suffix}
-                    label={featuredStats[1].label}
-                    delay={200}
-                    className="-bottom-4 -right-4 lg:-right-8"
-                    reducedMotion={prefersReducedMotion}
-                  />
-                ) : null}
+                {/* Year badge (2 cols x 2 rows) */}
+                <div className={`col-span-2 row-span-2 rounded-3xl border border-border-default bg-surface-raised flex flex-col items-center justify-center p-4 ${locale === 'lo' ? 'font-lao' : ''}`}>
+                  <span className="text-3xl lg:text-4xl font-display font-bold text-brand-500 leading-none">2024</span>
+                  <span className="text-[10px] uppercase tracking-widest text-on-surface-muted mt-1">{lbl.year.split(' ')[0]}</span>
+                </div>
 
-                {/* Decorative ring */}
-                <div className="absolute -inset-4 rounded-[2rem] border border-brand-200/40 dark:border-brand-700/30 pointer-events-none" />
+                {/* Services (2 cols x 2 rows) */}
+                <div className={`col-span-2 row-span-2 rounded-3xl bg-brand-500 text-white flex flex-col justify-between p-4`}>
+                  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3" /></svg>
+                  <div className={`text-[11px] font-medium leading-snug ${locale === 'lo' ? 'tracking-normal' : 'tracking-wide'}`}>
+                    {lbl.services}
+                  </div>
+                </div>
+
+                {/* Tagline strip (6 cols x 2 rows) */}
+                <div className={`col-span-6 row-span-2 rounded-3xl border border-brand-200/50 dark:border-brand-700/40 bg-brand-50/60 dark:bg-brand-950/40 backdrop-blur-sm flex items-center justify-between p-5 ${locale === 'lo' ? 'font-lao' : ''}`}>
+                  <span className="text-sm lg:text-base font-medium text-on-surface italic">
+                    &ldquo;{lbl.tagline}&rdquo;
+                  </span>
+                  <div className="flex items-center gap-1 text-brand-500">
+                    <span className="w-8 h-px bg-current" />
+                    <span className="text-xs uppercase tracking-widest">DotDeep</span>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
           </div>
         </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-on-surface-muted">
+          <span>{tCommon('readMore') || 'scroll'}</span>
+          <span className="w-px h-8 bg-border-default relative overflow-hidden">
+            <span className="absolute inset-0 bg-brand-500 animate-[scrollDot_2s_ease-in-out_infinite]" />
+          </span>
+        </div>
       </section>
 
-      {/* Ticker */}
-      <Ticker items={tickerItems} />
+      <KineticMarquee items={tickerItems} />
 
       <style>{`
-        @keyframes slideUp {
+        @keyframes heroSlide {
           from { transform: translateY(110%); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
         @keyframes marquee {
           from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
+          to { transform: translateX(-33.333%); }
+        }
+        @keyframes scrollDot {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100%); }
         }
       `}</style>
     </>

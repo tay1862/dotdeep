@@ -23,14 +23,11 @@ const iconMap: Record<string, React.ReactNode> = {
 export default function ServicesSummary({
   services,
   locale,
-  heading,
 }: {
   services: Service[]
   locale: string
-  heading?: {en?: string; th?: string; lo?: string} | null
 }) {
   const t = useTranslations('services')
-  const tSections = useTranslations('sections')
   const l = locale as 'en' | 'th' | 'lo'
 
   return (
@@ -38,11 +35,8 @@ export default function ServicesSummary({
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
           <div className="text-center mb-14">
-            <p className="text-sm font-medium text-brand-500 uppercase tracking-wider mb-2">
+            <h2 className={`text-fluid-3xl font-display font-bold ${locale === 'lo' ? 'font-lao' : ''}`}>
               {t('title')}
-            </p>
-            <h2 className={`text-fluid-2xl font-display font-bold ${locale === 'lo' ? 'font-lao' : ''}`}>
-              {heading?.[l] || heading?.en || tSections('ourServices')}
             </h2>
           </div>
         </ScrollReveal>

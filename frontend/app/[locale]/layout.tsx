@@ -8,6 +8,7 @@ import Header from '@/app/components/Header'
 import Footer from '@/app/components/Footer'
 import FloatingButtons from '@/app/components/FloatingButtons'
 import DraftModeToast from '@/app/components/DraftModeToast'
+import CustomCursor from '@/app/components/CustomCursor'
 import {SanityLive} from '@/sanity/lib/live'
 import {handleError} from '@/app/client-utils'
 import {locales} from '@/i18n/config'
@@ -34,7 +35,8 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <div data-locale={locale} className="min-h-screen flex flex-col">
+      <div data-locale={locale} className="min-h-screen flex flex-col grain-overlay">
+        <CustomCursor />
         <Toaster />
         {isDraftMode && (
           <>

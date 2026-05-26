@@ -1,6 +1,7 @@
 import {getTranslations} from 'next-intl/server'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
+import {buildBreadcrumbJsonLd} from '@/app/lib/structured-data'
 import ContactForm from '@/app/components/contact/ContactForm'
 import {sanityFetch} from '@/sanity/lib/live'
 import {siteSettingsQuery} from '@/sanity/lib/queries'
@@ -18,13 +19,22 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 
 export default async function ContactPage({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params
+  const t = await getTranslations({locale, namespace: 'contact'})
   const {data: settings} = await sanityFetch({query: siteSettingsQuery})
 
+  const breadcrumb = buildBreadcrumbJsonLd(
+    [{name: 'Home', path: '/'}, {name: t('title'), path: '/contact'}],
+    locale,
+  )
+
   return (
-    <section className="py-16 lg:py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <ContactForm locale={locale} settings={settings} />
-      </div>
-    </section>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(breadcrumb)}} />
+      <section className="py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <ContactForm locale={locale} settings={settings} />
+        </div>
+      </section>
+    </>
   )
 }

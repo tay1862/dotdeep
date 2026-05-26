@@ -58,18 +58,30 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     icons: {
-      icon: [{url: '/icon.png', type: 'image/png'}],
-      shortcut: ['/favicon.ico'],
-      apple: [{url: '/icon.png'}],
+      icon: [
+        {url: '/icon.png', type: 'image/png', sizes: '512x512'},
+        {url: '/icon.png', type: 'image/png', sizes: '192x192'},
+      ],
+      shortcut: ['/icon.png'],
+      apple: [{url: '/apple-icon.png', sizes: '180x180'}],
     },
     keywords: [
       'DotDeep Design',
+      'DotDeep',
       'design studio',
-      'web development',
-      'graphic design',
-      'UI UX',
-      'Laos',
+      'design studio Laos',
+      'web development Laos',
+      'graphic design Vientiane',
+      'UI UX design',
+      'ອອກແບບ',
+      'ພັດທະນາເວັບ',
+      'ອອກແບບກຣາບຟິກ',
+      'ออกแบบเว็บไซต์',
+      'ออกแบบกราฟิก ลาว',
+      'web design Southeast Asia',
+      'branding agency Laos',
       'Vientiane',
+      'ວຽງຈັນ',
     ],
     openGraph: {
       type: 'website',
@@ -185,6 +197,10 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     >
       <head>
         <Script src="/theme.js" strategy="beforeInteractive" />
+        <meta name="geo.region" content="LA-VT" />
+        <meta name="geo.placename" content="Vientiane" />
+        <meta name="geo.position" content="17.9757;102.6331" />
+        <meta name="ICBM" content="17.9757, 102.6331" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{__html: JSON.stringify(schemaGraph)}}

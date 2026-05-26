@@ -2,6 +2,7 @@ import type {NextConfig} from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
+const isDevelopment = process.env.NODE_ENV !== 'production'
 
 const cspDirectives = [
   "default-src 'self'",
@@ -9,7 +10,7 @@ const cspDirectives = [
   "object-src 'none'",
   "form-action 'self'",
   "frame-ancestors 'self' https://*.sanity.io https://*.sanity.studio",
-  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.sanity.io",
   "font-src 'self' data:",
@@ -24,7 +25,12 @@ const nextConfig: NextConfig = {
     SC_DISABLE_SPEEDY: 'false',
   },
   images: {
-    remotePatterns: [new URL('https://cdn.sanity.io/**')],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
   },
   async headers() {
     return [

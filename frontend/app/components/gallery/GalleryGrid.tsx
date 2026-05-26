@@ -18,7 +18,12 @@ interface Project {
   completedAt?: string | null
 }
 
-const categories = ['all', 'graphic', 'web', 'uiux', 'video'] as const
+const defaultCatLabels: Record<string, string> = {
+  graphic: 'graphic',
+  web: 'web',
+  uiux: 'uiux',
+  video: 'video',
+}
 
 export default function GalleryGrid({projects, locale}: {projects: Project[]; locale: string}) {
   const t = useTranslations('gallery')
@@ -28,13 +33,18 @@ export default function GalleryGrid({projects, locale}: {projects: Project[]; lo
 
   const filtered = active === 'all' ? projects : projects.filter((p) => p.category === active)
 
-  const catLabels: Record<string, string> = {
+  const knownLabels: Record<string, string> = {
     all: t('all'),
     graphic: t('graphic'),
     web: t('web'),
     uiux: t('uiux'),
     video: t('video'),
   }
+
+  // Build dynamic category list from project data
+  const projectCats = new Set<string>()
+  projects.forEach((p) => { if (p.category) projectCats.add(p.category) })
+  const orderedCats = ['all', ...Object.keys(defaultCatLabels).filter((c) => projectCats.has(c)), ...[...projectCats].filter((c) => !(c in defaultCatLabels))]
 
   return (
     <>
@@ -48,7 +58,7 @@ export default function GalleryGrid({projects, locale}: {projects: Project[]; lo
       {/* Category Filter */}
       <ScrollReveal>
         <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {categories.map((cat) => (
+          {orderedCats.map((cat) => (
             <button
               key={cat}
               onClick={() => setActive(cat)}
@@ -59,7 +69,7 @@ export default function GalleryGrid({projects, locale}: {projects: Project[]; lo
               }`}
               aria-pressed={active === cat}
             >
-              {catLabels[cat]}
+              {knownLabels[cat] || cat}
             </button>
           ))}
         </div>
@@ -100,7 +110,7 @@ export default function GalleryGrid({projects, locale}: {projects: Project[]; lo
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-1.5">
                   {project.category && (
-                    <span className="text-xs font-medium text-brand-500">{catLabels[project.category] || project.category}</span>
+                    <span className="text-xs font-medium text-brand-500">{knownLabels[project.category] || project.category}</span>
                   )}
                   {project.client && (
                     <span className="text-xs text-[var(--on-surface-muted)]">• {project.client}</span>

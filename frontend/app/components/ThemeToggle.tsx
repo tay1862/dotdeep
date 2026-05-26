@@ -1,33 +1,35 @@
 'use client'
 
-import {useState} from 'react'
+import {useCallback, useSyncExternalStore} from 'react'
 
-function getCurrentTheme() {
-  if (typeof document === 'undefined') {
-    return false
-  }
+let themeVersion = 0
+const listeners = new Set<() => void>()
 
-  if (document.documentElement.classList.contains('dark')) {
-    return true
-  }
+function subscribe(cb: () => void) {
+  listeners.add(cb)
+  return () => listeners.delete(cb)
+}
 
-  if (document.documentElement.classList.contains('light')) {
-    return false
-  }
+function getSnapshot() {
+  void themeVersion
+  return document.documentElement.classList.contains('dark')
+}
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
+function getServerSnapshot() {
+  return false
 }
 
 export default function ThemeToggle() {
-  const [dark, setDark] = useState(getCurrentTheme)
+  const dark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
-  const toggle = () => {
-    const next = !getCurrentTheme()
-    setDark(next)
+  const toggle = useCallback(() => {
+    const next = !document.documentElement.classList.contains('dark')
     document.documentElement.classList.toggle('dark', next)
     document.documentElement.classList.toggle('light', !next)
     localStorage.setItem('theme', next ? 'dark' : 'light')
-  }
+    themeVersion++
+    listeners.forEach((cb) => cb())
+  }, [])
 
   return (
     <button
@@ -35,6 +37,7 @@ export default function ThemeToggle() {
       className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
       aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
       aria-pressed={dark}
+      suppressHydrationWarning
     >
       {dark ? (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
