@@ -97,3 +97,11 @@ create policy "Public read projects"      on public.projects      for select usi
 create policy "Public read team_members"  on public.team_members  for select using (true);
 create policy "Public read about"         on public.about         for select using (true);
 create policy "Public read site_settings" on public.site_settings for select using (true);
+
+-- Write policies (admin panel is protected at application level)
+create policy "Allow write services"      on public.services      for all using (true) with check (true);
+create policy "Allow write pricing_items" on public.pricing_items for all using (true) with check (true);
+create policy "Allow write projects"      on public.projects      for all using (true) with check (true);
+create policy "Allow write team_members"  on public.team_members  for all using (true) with check (true);
+create policy "Allow write about"         on public.about         for all using (true) with check (true);
+create policy "Allow write site_settings" on public.site_settings for all using (true) with check (true);
