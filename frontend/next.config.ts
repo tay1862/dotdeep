@@ -9,12 +9,12 @@ const cspDirectives = [
   "base-uri 'self'",
   "object-src 'none'",
   "form-action 'self'",
-  "frame-ancestors 'self' https://*.sanity.io https://*.sanity.studio",
+  "frame-ancestors 'self' https://*.sanity.io https://www.sanity.io https://*.sanity.studio",
   `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.sanity.io",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.sanity.io wss://*.sanity.io https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+  "connect-src 'self' https://*.sanity.io https://www.sanity.io wss://*.sanity.io https://vitals.vercel-insights.com https://va.vercel-scripts.com",
   "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://www.google.com https://www.google.com/maps",
   'upgrade-insecure-requests',
 ].join('; ')
@@ -52,10 +52,6 @@ const nextConfig: NextConfig = {
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
           },
           {
             key: 'Permissions-Policy',
