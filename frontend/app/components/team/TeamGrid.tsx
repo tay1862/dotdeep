@@ -1,24 +1,24 @@
+import Image from 'next/image'
 import {useTranslations} from 'next-intl'
 
-import SanityImage from '@/app/components/SanityImage'
 import ScrollReveal from '@/app/components/ScrollReveal'
 import {sanitizeExternalUrl} from '@/app/lib/urls'
 
 interface TeamMember {
-  _id: string
-  firstName?: string | null
-  lastName?: string | null
-  picture?: {asset?: {_ref?: string}} | null
-  role?: {en?: string; th?: string; lo?: string} | null
-  bio?: {en?: string; th?: string; lo?: string} | null
-  socialLinks?: {
-    whatsapp?: string | null
-    facebook?: string | null
-    instagram?: string | null
-    tiktok?: string | null
-    linkedin?: string | null
-    line?: string | null
-  } | null
+  id: string
+  firstName: string
+  lastName: string
+  pictureUrl: string | null
+  role: {en: string; th: string; lo: string}
+  bio: {en: string; th: string; lo: string}
+  socialLinks: {
+    whatsapp: string | null
+    facebook: string | null
+    instagram: string | null
+    tiktok: string | null
+    linkedin: string | null
+    line: string | null
+  }
 }
 
 export default function TeamGrid({team, locale}: {team: TeamMember[]; locale: string}) {
@@ -41,21 +41,21 @@ export default function TeamGrid({team, locale}: {team: TeamMember[]; locale: st
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {team.map((member, i) => (
-            <ScrollReveal key={member._id} delay={i * 80}>
+            <ScrollReveal key={member.id} delay={i * 80}>
               <div className="group p-6 rounded-2xl border border-[var(--border-default)] hover:border-brand-300 hover:shadow-xl transition-all text-center h-full">
                 {/* Avatar */}
                 <div className="relative w-28 h-28 rounded-full overflow-hidden mx-auto mb-5 bg-neutral-100 dark:bg-neutral-800 ring-2 ring-brand-100 dark:ring-brand-900 group-hover:ring-brand-300 transition-all">
-                  {member.picture?.asset?._ref ? (
-                    <SanityImage
-                      source={member.picture}
-                      alt={`${member.firstName || ''} ${member.lastName || ''}`}
+                  {member.pictureUrl ? (
+                    <Image
+                      src={member.pictureUrl}
+                      alt={`${member.firstName} ${member.lastName}`}
                       fill
                       className="object-cover"
                       sizes="112px"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-3xl font-bold text-neutral-300 dark:text-neutral-600">
-                      {(member.firstName?.[0] || '') + (member.lastName?.[0] || '')}
+                      {member.firstName[0]}{member.lastName[0]}
                     </div>
                   )}
                 </div>
@@ -63,16 +63,8 @@ export default function TeamGrid({team, locale}: {team: TeamMember[]; locale: st
                 <h3 className="text-lg font-display font-bold">
                   {member.firstName} {member.lastName}
                 </h3>
-                {member.role && (
-                  <p className="text-sm text-brand-500 font-medium mt-1">
-                    {member.role[l] || member.role.en || ''}
-                  </p>
-                )}
-                {member.bio && (
-                  <p className="text-sm text-[var(--on-surface-muted)] mt-3 leading-relaxed">
-                    {member.bio[l] || member.bio.en || ''}
-                  </p>
-                )}
+                <p className="text-sm text-brand-500 font-medium mt-1">{member.role[l]}</p>
+                <p className="text-sm text-[var(--on-surface-muted)] mt-3 leading-relaxed">{member.bio[l]}</p>
 
                 {/* Social */}
                 {member.socialLinks && (

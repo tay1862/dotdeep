@@ -2,20 +2,20 @@
 
 import {useState} from 'react'
 import {useTranslations} from 'next-intl'
+import Image from 'next/image'
 import Link from 'next/link'
 import ScrollReveal from '@/app/components/ScrollReveal'
-import SanityImage from '@/app/components/SanityImage'
 
 interface Project {
-  _id: string
-  title?: {en?: string; th?: string; lo?: string} | null
-  slug?: string | null
-  category?: string | null
-  coverImage?: {asset?: {_ref?: string}} | null
-  client?: string | null
-  techStack?: string[] | null
-  featured?: boolean | null
-  completedAt?: string | null
+  id: string
+  title: {en: string; th: string; lo: string}
+  slug: string
+  category: string
+  coverUrl: string | null
+  client: string | null
+  techStack: string[]
+  featured: boolean
+  completedAt: string | null
 }
 
 const defaultCatLabels: Record<string, string> = {
@@ -78,16 +78,16 @@ export default function GalleryGrid({projects, locale}: {projects: Project[]; lo
       {/* Masonry-ish Grid */}
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
         {filtered.map((project, i) => (
-          <ScrollReveal key={project._id} delay={i * 60}>
+          <ScrollReveal key={project.id} delay={i * 60}>
             <Link
               href={`/${locale}/gallery/${project.slug || ''}`}
               className="group block break-inside-avoid rounded-2xl overflow-hidden border border-[var(--border-default)] hover:border-brand-300 hover:shadow-xl transition-all"
             >
               <div className="relative aspect-[4/3] bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
-                {project.coverImage?.asset?._ref ? (
-                  <SanityImage
-                    source={project.coverImage}
-                    alt={project.title?.[l] || project.title?.en || ''}
+                {project.coverUrl ? (
+                  <Image
+                    src={project.coverUrl}
+                    alt={project.title[l]}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -117,7 +117,7 @@ export default function GalleryGrid({projects, locale}: {projects: Project[]; lo
                   )}
                 </div>
                 <h3 className="font-display font-semibold group-hover:text-brand-500 transition-colors">
-                  {project.title?.[l] || project.title?.en || 'Untitled'}
+                  {project.title[l]}
                 </h3>
                 {project.techStack && project.techStack.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mt-2">

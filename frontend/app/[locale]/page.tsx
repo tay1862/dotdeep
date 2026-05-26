@@ -2,8 +2,9 @@ import {getTranslations} from 'next-intl/server'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
 import {buildServiceJsonLd, buildLocalBusinessJsonLd} from '@/app/lib/structured-data'
-import {sanityFetch} from '@/sanity/lib/live'
-import {homePageQuery, allServicesQuery, siteSettingsQuery} from '@/sanity/lib/queries'
+import {services} from '@/app/data/services'
+import {getFeaturedProjects} from '@/app/data/projects'
+import {siteSettings} from '@/app/data/settings'
 import HeroSection from '@/app/components/home/HeroSection'
 import FeaturedProjects from '@/app/components/home/FeaturedProjects'
 import ServicesSummary from '@/app/components/home/ServicesSummary'
@@ -25,23 +26,19 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
   const {locale} = await params
   const l = locale as 'en' | 'th' | 'lo'
 
-  const [{data: homePage}, {data: services}, {data: settings}] = await Promise.all([
-    sanityFetch({query: homePageQuery}),
-    sanityFetch({query: allServicesQuery}),
-    sanityFetch({query: siteSettingsQuery}),
-  ])
+  const featuredProjects = getFeaturedProjects()
 
-  const serviceList = (services || []).map((s) => ({
-    name: s.title?.[l] || s.title?.en || '',
-    description: s.shortDescription?.[l] || s.shortDescription?.en || '',
-    slug: s.slug || '',
+  const serviceList = services.map((s) => ({
+    name: s.title[l],
+    description: s.shortDescription[l],
+    slug: s.slug,
   }))
 
   const serviceJsonLd = buildServiceJsonLd(serviceList, locale)
   const businessJsonLd = buildLocalBusinessJsonLd({
-    email: settings?.contactEmail,
-    phone: settings?.contactPhone,
-    address: settings?.address?.[l] || settings?.address?.en,
+    email: siteSettings.contactEmail,
+    phone: siteSettings.contactPhone,
+    address: siteSettings.address[l],
   })
 
   return (
@@ -54,15 +51,15 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
         type="application/ld+json"
         dangerouslySetInnerHTML={{__html: JSON.stringify(serviceJsonLd)}}
       />
-      <HeroSection data={homePage} locale={locale} />
-      {homePage?.featuredProjects && homePage.featuredProjects.length > 0 && (
-        <FeaturedProjects projects={homePage.featuredProjects} locale={locale} />
+      <HeroSection data={null} locale={locale} />
+      {featuredProjects.length > 0 && (
+        <FeaturedProjects projects={featuredProjects} locale={locale} />
       )}
-      {services && services.length > 0 && (
+      {services.length > 0 && (
         <ServicesSummary services={services} locale={locale} />
       )}
       <QuoteSection locale={locale} />
-      <CTASection data={homePage} locale={locale} />
+      <CTASection data={null} locale={locale} />
     </>
   )
 }

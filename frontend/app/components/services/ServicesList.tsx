@@ -5,12 +5,12 @@ import Link from 'next/link'
 import ScrollReveal from '@/app/components/ScrollReveal'
 
 interface Service {
-  _id: string
-  title?: {en?: string; th?: string; lo?: string} | null
-  slug?: string | null
-  shortDescription?: {en?: string; th?: string; lo?: string} | null
-  icon?: string | null
-  features?: Array<{en?: string; th?: string; lo?: string}> | null
+  id: string
+  title: {en: string; th: string; lo: string}
+  slug: string
+  shortDescription: {en: string; th: string; lo: string}
+  icon: string
+  features: Array<{en: string; th: string; lo: string}>
 }
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -34,21 +34,21 @@ export default function ServicesList({services, locale}: {services: Service[]; l
 
       <div className="grid md:grid-cols-2 gap-6">
         {services.map((service, i) => (
-          <ScrollReveal key={service._id} delay={i * 100}>
+          <ScrollReveal key={service.id} delay={i * 100}>
             <Link
-              href={`/${locale}/services/${service.slug || ''}`}
+              href={`/${locale}/services/${service.slug}`}
               className="group block p-8 rounded-2xl border border-[var(--border-default)] bg-[var(--surface)] hover:border-brand-300 hover:shadow-xl transition-all h-full"
             >
               <div className="w-14 h-14 rounded-xl bg-brand-50 dark:bg-brand-950/50 text-brand-500 flex items-center justify-center mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                {iconMap[service.icon || 'code'] || iconMap.code}
+                {iconMap[service.icon] || iconMap.code}
               </div>
 
               <h2 className="text-xl font-display font-bold mb-2 group-hover:text-brand-500 transition-colors">
-                {service.title?.[l] || service.title?.en || 'Service'}
+                {service.title[l]}
               </h2>
 
               <p className="text-[var(--on-surface-muted)] leading-relaxed mb-5">
-                {service.shortDescription?.[l] || service.shortDescription?.en || ''}
+                {service.shortDescription[l]}
               </p>
 
               {service.features && service.features.length > 0 && (
@@ -56,7 +56,7 @@ export default function ServicesList({services, locale}: {services: Service[]; l
                   {service.features.slice(0, 4).map((f, fi) => (
                     <li key={fi} className="flex items-start gap-2 text-sm text-[var(--on-surface-muted)]">
                       <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand-500 shrink-0 mt-0.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
-                      {f[l] || f.en || ''}
+                      {f[l]}
                     </li>
                   ))}
                 </ul>

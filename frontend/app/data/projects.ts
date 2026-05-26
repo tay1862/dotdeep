@@ -1,0 +1,126 @@
+import type {Project} from './types'
+
+export const projects: Project[] = [
+  {
+    id: '1',
+    slug: 'dotdeep-brand-identity',
+    title: {en: 'DotDeep Brand Identity', th: 'อัตลักษณ์แบรนด์ DotDeep', lo: 'ຍີ່ຫໍ້ DotDeep'},
+    description: {
+      en: 'Complete brand identity for DotDeep Design Studio including logo, color palette, typography, and brand guidelines.',
+      th: 'อัตลักษณ์แบรนด์ครบชุดสำหรับ DotDeep Design Studio รวมถึงโลโก้ จานสี ตัวอักษร และคู่มือแบรนด์',
+      lo: 'ຍີ່ຫໍ້ຄົບຊຸດສໍາລັບ DotDeep Design Studio',
+    },
+    category: 'graphic',
+    coverUrl: null,
+    imageUrls: [],
+    client: 'DotDeep Design',
+    techStack: ['Illustrator', 'Figma'],
+    projectUrl: null,
+    videoUrl: null,
+    featured: true,
+    completedAt: '2024-01-01',
+  },
+  {
+    id: '2',
+    slug: 'cafe-website',
+    title: {en: 'Café Lao Website', th: 'เว็บไซต์ Café Lao', lo: 'ເວັບໄຊ Café Lao'},
+    description: {
+      en: 'Modern restaurant website with online menu, booking system, and multilingual support for a Vientiane café.',
+      th: 'เว็บไซต์ร้านอาหารสมัยใหม่พร้อมเมนูออนไลน์ ระบบจองโต๊ะ และรองรับหลายภาษาสำหรับร้านกาแฟในเวียงจันทน์',
+      lo: 'ເວັບໄຊຮ້ານ ອາຫານທັນສະໄໝ ພ້ອມລາຍການ ອາຫານ, ລະບົບຈອງ ແລະ ຫຼາຍພາສາ',
+    },
+    category: 'web',
+    coverUrl: null,
+    imageUrls: [],
+    client: 'Café Lao',
+    techStack: ['Next.js', 'Tailwind CSS', 'Vercel'],
+    projectUrl: null,
+    videoUrl: null,
+    featured: true,
+    completedAt: '2024-03-01',
+  },
+  {
+    id: '3',
+    slug: 'fintech-app-design',
+    title: {en: 'FinTech App UI', th: 'UI แอป FinTech', lo: 'UI ແອັບ FinTech'},
+    description: {
+      en: 'User interface design for a mobile banking application targeting young professionals in Southeast Asia.',
+      th: 'การออกแบบส่วนติดต่อผู้ใช้สำหรับแอปพลิเคชันธนาคารมือถือสำหรับมืออาชีพรุ่นใหม่ในเอเชียตะวันออกเฉียงใต้',
+      lo: 'ການອອກແບບ UI ສໍາລັບແອັບ ທະນາຄານ ມືຖືສໍາລັບ ຜູ້ຊ່ຽວຊານ ໃຫ້ໜຸ່ມໃນອາຊີ',
+    },
+    category: 'uiux',
+    coverUrl: null,
+    imageUrls: [],
+    client: 'Confidential',
+    techStack: ['Figma', 'Protopie'],
+    projectUrl: null,
+    videoUrl: null,
+    featured: true,
+    completedAt: '2024-05-01',
+  },
+  {
+    id: '4',
+    slug: 'product-launch-video',
+    title: {en: 'Product Launch Video', th: 'วิดีโอเปิดตัวผลิตภัณฑ์', lo: 'ວິດີໂອ ເປີດໂຕ ຜະລິດຕະພັນ'},
+    description: {
+      en: '60-second promotional video with motion graphics for a new product launch campaign.',
+      th: 'วิดีโอโปรโมชั่น 60 วินาทีพร้อมกราฟิกเคลื่อนไหวสำหรับแคมเปญเปิดตัวผลิตภัณฑ์ใหม่',
+      lo: 'ວິດີໂອໂປຣໂມຊັ່ນ 60 ວິນາທີ ພ້ອມກຣາຟິກ ສໍາລັບ ການ ເປີດໂຕ',
+    },
+    category: 'video',
+    coverUrl: null,
+    imageUrls: [],
+    client: 'Local Brand',
+    techStack: ['After Effects', 'Premiere Pro'],
+    projectUrl: null,
+    videoUrl: null,
+    featured: false,
+    completedAt: '2024-07-01',
+  },
+  {
+    id: '5',
+    slug: 'real-estate-platform',
+    title: {en: 'Real Estate Platform', th: 'แพลตฟอร์มอสังหาริมทรัพย์', lo: 'ແພລດຟອມ ອະສັງຫາ'},
+    description: {
+      en: 'Property listing platform with search filters, map integration, and agent contact system.',
+      th: 'แพลตฟอร์มรายการอสังหาริมทรัพย์พร้อมตัวกรองการค้นหา การรวมแผนที่ และระบบติดต่อตัวแทน',
+      lo: 'ແພລດຟອມ ລາຍຊື່ ອະສັງຫາ ພ້ອມ ການຄົ້ນຫາ ແລະ ແຜນທີ່',
+    },
+    category: 'web',
+    coverUrl: null,
+    imageUrls: [],
+    client: 'LaoHomes',
+    techStack: ['React', 'Node.js', 'Google Maps API'],
+    projectUrl: null,
+    videoUrl: null,
+    featured: false,
+    completedAt: '2024-09-01',
+  },
+  {
+    id: '6',
+    slug: 'food-packaging-design',
+    title: {en: 'Food Packaging Design', th: 'ออกแบบบรรจุภัณฑ์อาหาร', lo: 'ອອກແບບ ໜ້າຫໍ່ ອາຫານ'},
+    description: {
+      en: 'Packaging design for a local food brand including labels, boxes, and promotional materials.',
+      th: 'ออกแบบบรรจุภัณฑ์สำหรับแบรนด์อาหารท้องถิ่น รวมถึงฉลาก กล่อง และสื่อโปรโมชั่น',
+      lo: 'ການອອກແບບໜ້າຫໍ່ ສໍາລັບ ຍີ່ຫໍ້ ອາຫານທ້ອງຖິ່ນ',
+    },
+    category: 'graphic',
+    coverUrl: null,
+    imageUrls: [],
+    client: 'Lao Foods',
+    techStack: ['Illustrator', 'Photoshop'],
+    projectUrl: null,
+    videoUrl: null,
+    featured: false,
+    completedAt: '2024-11-01',
+  },
+]
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug)
+}
+
+export function getFeaturedProjects(): Project[] {
+  return projects.filter((p) => p.featured)
+}

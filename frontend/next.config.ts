@@ -9,28 +9,19 @@ const cspDirectives = [
   "base-uri 'self'",
   "object-src 'none'",
   "form-action 'self'",
-  "frame-ancestors 'self' https://*.sanity.io https://www.sanity.io https://*.sanity.studio",
+  "frame-ancestors 'self'",
   `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://cdn.sanity.io",
+  "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.sanity.io https://www.sanity.io wss://*.sanity.io https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+  "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
   "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://www.google.com https://www.google.com/maps",
   'upgrade-insecure-requests',
 ].join('; ')
 
 const nextConfig: NextConfig = {
-  env: {
-    // Matches the behavior of `sanity dev` which sets styled-components to use the fastest way of inserting CSS rules in both dev and production. It's default behavior is to disable it in dev mode.
-    SC_DISABLE_SPEEDY: 'false',
-  },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-      },
-    ],
+    remotePatterns: [],
   },
   async headers() {
     return [

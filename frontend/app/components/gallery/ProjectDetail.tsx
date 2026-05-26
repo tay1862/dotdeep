@@ -1,34 +1,31 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {useTranslations} from 'next-intl'
-import {type PortableTextBlock} from 'next-sanity'
 
-import PortableText from '@/app/components/PortableText'
-import SanityImage from '@/app/components/SanityImage'
 import ScrollReveal from '@/app/components/ScrollReveal'
 import {sanitizeExternalUrl} from '@/app/lib/urls'
-import {getLocalizedValue, type LocalizedPortableText} from '@/sanity/lib/localized'
 
 interface ProjectData {
-  _id: string
-  title?: {en?: string; th?: string; lo?: string} | null
-  slug?: string | null
-  category?: string | null
-  coverImage?: {asset?: {_ref?: string}; alt?: string | null} | null
-  images?: Array<{asset?: {_ref?: string}; alt?: string | null}> | null
-  client?: string | null
-  description?: LocalizedPortableText
-  techStack?: string[] | null
-  projectUrl?: string | null
-  videoUrl?: string | null
-  completedAt?: string | null
+  id: string
+  title: {en: string; th: string; lo: string}
+  slug: string
+  category: string
+  coverUrl: string | null
+  imageUrls: string[]
+  client: string | null
+  description: {en: string; th: string; lo: string}
+  techStack: string[]
+  projectUrl: string | null
+  videoUrl: string | null
+  completedAt: string | null
 }
 
 export default function ProjectDetail({project, locale}: {project: ProjectData; locale: string}) {
   const t = useTranslations('gallery')
   const l = locale as 'en' | 'th' | 'lo'
 
-  const title = project.title?.[l] || project.title?.en || 'Untitled'
-  const description = getLocalizedValue(project.description, l)
+  const title = project.title[l]
+  const description = project.description[l]
   const projectUrl = sanitizeExternalUrl(project.projectUrl)
   const videoUrl = sanitizeExternalUrl(project.videoUrl)
 
@@ -76,12 +73,12 @@ export default function ProjectDetail({project, locale}: {project: ProjectData; 
         </ScrollReveal>
 
         {/* Cover Image */}
-        {project.coverImage?.asset?._ref && (
+        {project.coverUrl && (
           <ScrollReveal>
             <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-10 bg-neutral-100 dark:bg-neutral-800">
-              <SanityImage
-                source={project.coverImage}
-                alt={project.coverImage.alt || title}
+              <Image
+                src={project.coverUrl}
+                alt={title}
                 fill
                 className="object-cover"
                 priority
@@ -94,14 +91,11 @@ export default function ProjectDetail({project, locale}: {project: ProjectData; 
         {/* Info grid */}
         <div className="grid md:grid-cols-3 gap-10 mb-12">
           <div className="md:col-span-2">
-            {description ? (
+            {description && (
               <ScrollReveal>
-                <PortableText
-                  className="max-w-none prose-p:text-on-surface-muted prose-p:leading-relaxed prose-p:text-lg"
-                  value={description as PortableTextBlock[]}
-                />
+                <p className="text-lg text-[var(--on-surface-muted)] leading-relaxed">{description}</p>
               </ScrollReveal>
-            ) : null}
+            )}
           </div>
 
           <div className="space-y-6">
@@ -157,22 +151,20 @@ export default function ProjectDetail({project, locale}: {project: ProjectData; 
         </div>
 
         {/* Image Gallery */}
-        {project.images && project.images.length > 0 && (
+        {project.imageUrls && project.imageUrls.length > 0 && (
           <div className="space-y-6">
-            {project.images.map((img, i) => (
-              img.asset?._ref && (
-                <ScrollReveal key={i} delay={i * 80}>
-                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-800">
-                    <SanityImage
-                      source={img}
-                      alt={img.alt || `${title} - ${i + 1}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 960px"
-                    />
-                  </div>
-                </ScrollReveal>
-              )
+            {project.imageUrls.map((url, i) => (
+              <ScrollReveal key={i} delay={i * 80}>
+                <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+                  <Image
+                    src={url}
+                    alt={`${title} - ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 960px"
+                  />
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         )}

@@ -4,7 +4,6 @@ import {useTranslations} from 'next-intl'
 import Link from 'next/link'
 import {useEffect, useRef} from 'react'
 
-import SanityImage from '@/app/components/SanityImage'
 import ScrollReveal from '@/app/components/ScrollReveal'
 import MagneticButton from '@/app/components/MagneticButton'
 import useReducedMotion from '@/app/components/useReducedMotion'
@@ -262,28 +261,17 @@ export default function HeroSection({data, locale}: {data: HeroData | null; loca
               <div className="grid grid-cols-6 grid-rows-6 gap-3 aspect-square max-w-md mx-auto lg:max-w-none">
                 {/* Main image card (3 cols x 4 rows) */}
                 <div className="col-span-4 row-span-4 relative rounded-3xl overflow-hidden bg-gradient-to-br from-brand-100 to-brand-200 dark:from-brand-900 dark:to-brand-800 shadow-2xl group">
-                  {data?.heroImage?.asset?._ref ? (
-                    <SanityImage
-                      source={data.heroImage}
-                      alt={heading}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="grid grid-cols-3 gap-3 p-8 opacity-30">
-                        {[...Array(9)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="aspect-square rounded-xl"
-                            style={{background: `oklch(${0.5 + i * 0.04} 0.2 ${264 + i * 10})`}}
-                          />
-                        ))}
-                      </div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="grid grid-cols-3 gap-3 p-8 opacity-30">
+                      {[...Array(9)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="aspect-square rounded-xl"
+                          style={{background: `oklch(${0.5 + i * 0.04} 0.2 ${264 + i * 10})`}}
+                        />
+                      ))}
                     </div>
-                  )}
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 text-white text-xs uppercase tracking-widest opacity-90">
                     Selected work

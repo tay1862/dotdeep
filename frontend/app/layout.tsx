@@ -6,46 +6,33 @@ import Script from 'next/script'
 import localFont from 'next/font/local'
 import {Noto_Sans_Lao, Noto_Sans_Thai} from 'next/font/google'
 import {getLocale} from 'next-intl/server'
-import {toPlainText} from 'next-sanity'
 
 import {buildRootRedirectAlternates} from '@/app/lib/metadata'
 import {getSiteOrigin, sanitizeExternalUrl} from '@/app/lib/urls'
-import * as demo from '@/sanity/lib/demo'
-import {sanityFetch} from '@/sanity/lib/live'
-import {settingsQuery} from '@/sanity/lib/queries'
-import {resolveOpenGraphImage} from '@/sanity/lib/utils'
+import {siteSettings} from '@/app/data/settings'
 
 /**
  * Generate metadata for the page.
  */
-export async function generateMetadata(): Promise<Metadata> {
-  const {data: settings} = await sanityFetch({
-    query: settingsQuery,
-    stega: false,
-  })
-  const title = settings?.title || demo.title
-  const description = settings?.description || demo.description
-  const siteUrl = getSiteOrigin()
+const SITE_TITLE = 'DotDeep Design'
+const SITE_DESCRIPTION = 'Creative design studio in Vientiane — Graphic Design, Web Development, UI/UX, and Video Production.'
 
-  const ogImage = resolveOpenGraphImage(settings?.ogImage)
+export async function generateMetadata(): Promise<Metadata> {
+  const siteUrl = getSiteOrigin()
   let metadataBase: URL | undefined = undefined
   try {
-    metadataBase = settings?.ogImage?.metadataBase
-      ? new URL(settings.ogImage.metadataBase)
-      : siteUrl
-        ? new URL(siteUrl)
-        : undefined
+    metadataBase = siteUrl ? new URL(siteUrl) : undefined
   } catch {
     // ignore
   }
   return {
     metadataBase,
     title: {
-      template: `%s | ${title}`,
-      default: title,
+      template: `%s | ${SITE_TITLE}`,
+      default: SITE_TITLE,
     },
-    description: toPlainText(description),
-    applicationName: title,
+    description: SITE_DESCRIPTION,
+    applicationName: SITE_TITLE,
     alternates: buildRootRedirectAlternates('/'),
     robots: {
       index: true,
@@ -85,17 +72,15 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
     openGraph: {
       type: 'website',
-      siteName: title,
-      title,
-      description: toPlainText(description),
+      siteName: SITE_TITLE,
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
       url: siteUrl,
-      images: ogImage ? [ogImage] : [],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description: toPlainText(description),
-      images: ogImage ? [ogImage] : [],
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
     },
   }
 }
@@ -154,16 +139,12 @@ const notoSansLao = Noto_Sans_Lao({
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const locale = await getLocale()
-  const {data: settings} = await sanityFetch({
-    query: settingsQuery,
-    stega: false,
-  })
   const siteUrl = getSiteOrigin()
   const sameAs = [
-    settings?.socialLinks?.facebook,
-    settings?.socialLinks?.instagram,
-    settings?.socialLinks?.tiktok,
-    settings?.socialLinks?.linkedin,
+    siteSettings.socialLinks.facebook,
+    siteSettings.socialLinks.instagram,
+    siteSettings.socialLinks.tiktok,
+    siteSettings.socialLinks.linkedin,
   ].flatMap((value) => {
     const url = sanitizeExternalUrl(value)
     return url ? [url] : []
@@ -173,16 +154,16 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     '@graph': [
       {
         '@type': 'Organization',
-        name: settings?.title || demo.title,
+        name: SITE_TITLE,
         url: siteUrl,
-        description: toPlainText(settings?.description || demo.description),
-        email: settings?.contactEmail || undefined,
-        telephone: settings?.contactPhone || undefined,
+        description: SITE_DESCRIPTION,
+        email: siteSettings.contactEmail || undefined,
+        telephone: siteSettings.contactPhone || undefined,
         sameAs: sameAs.length ? sameAs : undefined,
       },
       {
         '@type': 'WebSite',
-        name: settings?.title || demo.title,
+        name: SITE_TITLE,
         url: siteUrl,
         inLanguage: ['en', 'th', 'lo'],
       },

@@ -5,13 +5,14 @@ import Link from 'next/link'
 import ScrollReveal from '@/app/components/ScrollReveal'
 
 interface PricingItem {
-  _id: string
-  name?: {en?: string; th?: string; lo?: string} | null
-  price?: number | null
-  currency?: string | null
-  description?: {en?: string; th?: string; lo?: string} | null
-  features?: Array<{en?: string; th?: string; lo?: string}> | null
-  service?: {title?: {en?: string; th?: string; lo?: string}; slug?: string} | null
+  id: string
+  name: {en: string; th: string; lo: string}
+  price: number | null
+  currency: string
+  description: {en: string; th: string; lo: string}
+  features: Array<{en: string; th: string; lo: string}>
+  popular: boolean
+  service: {title: {en: string; th: string; lo: string}; slug: string}
 }
 
 export default function PricingGrid({items, locale}: {items: PricingItem[]; locale: string}) {
@@ -47,17 +48,15 @@ export default function PricingGrid({items, locale}: {items: PricingItem[]; loca
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((item, i) => (
-            <ScrollReveal key={item._id} delay={i * 80}>
+            <ScrollReveal key={item.id} delay={i * 80}>
               <div className="relative p-7 rounded-2xl border border-[var(--border-default)] bg-[var(--surface)] hover:border-brand-300 hover:shadow-xl transition-all h-full flex flex-col">
                 {/* Service badge */}
-                {item.service && (
-                  <span className="text-xs font-medium text-brand-500 mb-3">
-                    {item.service.title?.[l] || item.service.title?.en || ''}
-                  </span>
-                )}
+                <span className="text-xs font-medium text-brand-500 mb-3">
+                  {item.service.title[l]}
+                </span>
 
                 <h3 className="text-lg font-display font-bold mb-1">
-                  {item.name?.[l] || item.name?.en || 'Package'}
+                  {item.name[l]}
                 </h3>
 
                 {item.price != null && item.currency ? (
@@ -73,18 +72,16 @@ export default function PricingGrid({items, locale}: {items: PricingItem[]; loca
                   <p className="text-xl font-bold text-brand-500 mb-4">{t('contactUs')}</p>
                 )}
 
-                {item.description && (
-                  <p className="text-sm text-[var(--on-surface-muted)] mb-5">
-                    {item.description[l] || item.description.en || ''}
-                  </p>
-                )}
+                <p className="text-sm text-[var(--on-surface-muted)] mb-5">
+                  {item.description[l]}
+                </p>
 
                 {item.features && item.features.length > 0 && (
                   <ul className="space-y-2.5 mb-6 flex-1">
                     {item.features.map((f, fi) => (
                       <li key={fi} className="flex items-start gap-2 text-sm">
                         <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand-500 shrink-0 mt-0.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
-                        {f[l] || f.en || ''}
+                        {f[l]}
                       </li>
                     ))}
                   </ul>

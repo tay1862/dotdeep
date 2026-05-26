@@ -5,12 +5,11 @@ import Link from 'next/link'
 import ScrollReveal from '@/app/components/ScrollReveal'
 
 interface Service {
-  _id: string
-  title?: {en?: string; th?: string; lo?: string} | null
-  slug?: string | null
-  shortDescription?: {en?: string; th?: string; lo?: string} | null
-  icon?: string | null
-  features?: Array<{en?: string; th?: string; lo?: string}> | null
+  id: string
+  title: {en: string; th: string; lo: string}
+  slug: string
+  shortDescription: {en: string; th: string; lo: string}
+  icon: string
 }
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -43,19 +42,19 @@ export default function ServicesSummary({
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.slice(0, 4).map((service, i) => (
-            <ScrollReveal key={service._id} delay={i * 100}>
+            <ScrollReveal key={service.id} delay={i * 100}>
               <Link
-                href={`/${locale}/services/${service.slug || ''}`}
+                href={`/${locale}/services/${service.slug}`}
                 className="group block p-6 rounded-2xl border border-[var(--border-default)] bg-[var(--surface)] hover:border-brand-300 hover:shadow-lg transition-all h-full"
               >
                 <div className="w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-950/50 text-brand-500 flex items-center justify-center mb-5 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                  {iconMap[service.icon || 'code'] || iconMap.code}
+                  {iconMap[service.icon] || iconMap.code}
                 </div>
                 <h3 className="font-display font-semibold mb-2 group-hover:text-brand-500 transition-colors">
-                  {service.title?.[l] || service.title?.en || 'Service'}
+                  {service.title[l]}
                 </h3>
                 <p className="text-sm text-[var(--on-surface-muted)] leading-relaxed">
-                  {service.shortDescription?.[l] || service.shortDescription?.en || ''}
+                  {service.shortDescription[l]}
                 </p>
               </Link>
             </ScrollReveal>

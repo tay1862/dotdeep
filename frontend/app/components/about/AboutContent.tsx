@@ -1,33 +1,30 @@
+import Image from 'next/image'
 import {useTranslations} from 'next-intl'
-import {type PortableTextBlock} from 'next-sanity'
 
-import PortableText from '@/app/components/PortableText'
-import SanityImage from '@/app/components/SanityImage'
 import ScrollReveal from '@/app/components/ScrollReveal'
 import {sanitizeExternalUrl} from '@/app/lib/urls'
-import {getLocalizedValue, type LocalizedPortableText} from '@/sanity/lib/localized'
 
 interface TeamMember {
-  _id: string
-  firstName?: string | null
-  lastName?: string | null
-  picture?: {asset?: {_ref?: string}} | null
-  role?: {en?: string; th?: string; lo?: string} | null
-  bio?: {en?: string; th?: string; lo?: string} | null
-  socialLinks?: {
-    facebook?: string | null
-    instagram?: string | null
-    linkedin?: string | null
-  } | null
+  id: string
+  firstName: string
+  lastName: string
+  pictureUrl: string | null
+  role: {en: string; th: string; lo: string}
+  bio: {en: string; th: string; lo: string}
+  socialLinks: {
+    facebook: string | null
+    instagram: string | null
+    linkedin: string | null
+  }
 }
 
 interface AboutData {
-  heading?: {en?: string; th?: string; lo?: string} | null
-  vision?: LocalizedPortableText
-  mission?: LocalizedPortableText
-  story?: LocalizedPortableText
-  storyImage?: {asset?: {_ref?: string}} | null
-  techStack?: {name?: string; icon?: string; _key?: string}[] | null
+  heading: {en: string; th: string; lo: string}
+  vision: {en: string; th: string; lo: string}
+  mission: {en: string; th: string; lo: string}
+  story: {en: string; th: string; lo: string}
+  storyImageUrl: string | null
+  techStack: string[]
 }
 
 export default function AboutContent({
@@ -41,9 +38,9 @@ export default function AboutContent({
 }) {
   const t = useTranslations('about')
   const l = locale as 'en' | 'th' | 'lo'
-  const vision = getLocalizedValue(about?.vision, l)
-  const mission = getLocalizedValue(about?.mission, l)
-  const story = getLocalizedValue(about?.story, l)
+  const vision = about?.vision?.[l] || ''
+  const mission = about?.mission?.[l] || ''
+  const story = about?.story?.[l] || ''
 
   return (
     <div className="py-16 lg:py-24">
@@ -55,7 +52,7 @@ export default function AboutContent({
               {t('title')}
             </p>
             <h1 className={`text-fluid-2xl lg:text-fluid-3xl font-display font-bold ${locale === 'lo' ? 'font-lao' : ''}`}>
-              {about?.heading?.[l] || about?.heading?.en || t('title')}
+              {about?.heading?.[l] || t('title')}
             </h1>
           </div>
         </ScrollReveal>
@@ -68,12 +65,7 @@ export default function AboutContent({
                 <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
               </div>
               <h2 className="text-xl font-display font-bold mb-3">{t('vision')}</h2>
-              {vision ? (
-                <PortableText
-                  className="max-w-none prose-p:text-on-surface-muted prose-p:leading-relaxed"
-                  value={vision as PortableTextBlock[]}
-                />
-              ) : null}
+              {vision && <p className="text-[var(--on-surface-muted)] leading-relaxed">{vision}</p>}
             </div>
           </ScrollReveal>
 
@@ -83,39 +75,29 @@ export default function AboutContent({
                 <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
               </div>
               <h2 className="text-xl font-display font-bold mb-3">{t('mission')}</h2>
-              {mission ? (
-                <PortableText
-                  className="max-w-none prose-p:text-on-surface-muted prose-p:leading-relaxed"
-                  value={mission as PortableTextBlock[]}
-                />
-              ) : null}
+              {mission && <p className="text-[var(--on-surface-muted)] leading-relaxed">{mission}</p>}
             </div>
           </ScrollReveal>
         </div>
 
         {/* Story section with image */}
-        {(about?.storyImage?.asset?._ref || story) && (
+        {(about?.storyImageUrl || story) && (
           <ScrollReveal>
             <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                {about?.storyImage?.asset?._ref ? (
-                  <SanityImage
-                    source={about.storyImage}
+              {about?.storyImageUrl && (
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+                  <Image
+                    src={about.storyImageUrl}
                     alt={t('ourStory')}
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
-                ) : null}
-              </div>
+                </div>
+              )}
               <div>
                 <h2 className="text-fluid-xl font-display font-bold mb-4">{t('ourStory')}</h2>
-                {story ? (
-                  <PortableText
-                    className="max-w-none prose-p:text-on-surface-muted prose-p:leading-relaxed"
-                    value={story as PortableTextBlock[]}
-                  />
-                ) : null}
+                {story && <p className="text-[var(--on-surface-muted)] leading-relaxed">{story}</p>}
               </div>
             </div>
           </ScrollReveal>
@@ -129,10 +111,10 @@ export default function AboutContent({
               <div className="flex flex-wrap justify-center gap-3">
                 {about.techStack.map((tech) => (
                   <span
-                    key={tech._key || tech.name}
+                    key={tech}
                     className="px-4 py-2 rounded-full border border-[var(--border-default)] text-sm font-medium hover:border-brand-300 hover:text-brand-500 transition-colors"
                   >
-                    {tech.name}
+                    {tech}
                   </span>
                 ))}
               </div>
@@ -154,36 +136,28 @@ export default function AboutContent({
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {team.map((member, i) => (
-                <ScrollReveal key={member._id} delay={i * 80}>
+                <ScrollReveal key={member.id} delay={i * 80}>
                   <div className="group p-6 rounded-2xl border border-[var(--border-default)] hover:border-brand-300 hover:shadow-lg transition-all text-center">
                     <div className="relative w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800">
-                      {member.picture?.asset?._ref ? (
-                        <SanityImage
-                          source={member.picture}
-                          alt={`${member.firstName || ''} ${member.lastName || ''}`}
+                      {member.pictureUrl ? (
+                        <Image
+                          src={member.pictureUrl}
+                          alt={`${member.firstName} ${member.lastName}`}
                           fill
                           className="object-cover"
                           sizes="96px"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-neutral-400">
-                          {(member.firstName?.[0] || '') + (member.lastName?.[0] || '')}
+                          {member.firstName[0]}{member.lastName[0]}
                         </div>
                       )}
                     </div>
                     <h3 className="font-display font-semibold">
                       {member.firstName} {member.lastName}
                     </h3>
-                    {member.role && (
-                      <p className="text-sm text-brand-500 mt-0.5">
-                        {member.role[l] || member.role.en || ''}
-                      </p>
-                    )}
-                    {member.bio && (
-                      <p className="text-sm text-[var(--on-surface-muted)] mt-2 leading-relaxed">
-                        {member.bio[l] || member.bio.en || ''}
-                      </p>
-                    )}
+                    <p className="text-sm text-brand-500 mt-0.5">{member.role[l]}</p>
+                    <p className="text-sm text-[var(--on-surface-muted)] mt-2 leading-relaxed">{member.bio[l]}</p>
 
                     {/* Social links */}
                     {member.socialLinks && (

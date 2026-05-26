@@ -1,18 +1,18 @@
 'use client'
 
 import {useTranslations} from 'next-intl'
+import Image from 'next/image'
 import Link from 'next/link'
 import ScrollReveal from '@/app/components/ScrollReveal'
-import SanityImage from '@/app/components/SanityImage'
 
 interface Project {
-  _id: string
-  title?: {en?: string; th?: string; lo?: string} | null
-  slug?: string | null
-  category?: string | null
-  coverImage?: {asset?: {_ref?: string}} | null
-  client?: string | null
-  completedAt?: string | null
+  id: string
+  title: {en: string; th: string; lo: string}
+  slug: string
+  category: string
+  coverUrl: string | null
+  client: string | null
+  completedAt: string | null
 }
 
 export default function FeaturedProjects({projects, locale}: {projects: Project[]; locale: string}) {
@@ -52,16 +52,16 @@ export default function FeaturedProjects({projects, locale}: {projects: Project[
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.slice(0, 6).map((project, i) => (
-            <ScrollReveal key={project._id} delay={i * 80}>
+            <ScrollReveal key={project.id} delay={i * 80}>
               <Link
                 href={`/${locale}/gallery/${project.slug || ''}`}
                 className="group block rounded-2xl overflow-hidden border border-[var(--border-default)] hover:border-brand-300 transition-all hover:shadow-lg"
               >
                 <div className="relative aspect-[16/10] bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
-                  {project.coverImage?.asset?._ref ? (
-                    <SanityImage
-                      source={project.coverImage}
-                      alt={project.title?.[l] || project.title?.en || ''}
+                  {project.coverUrl ? (
+                    <Image
+                      src={project.coverUrl}
+                      alt={project.title[l]}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -84,7 +84,7 @@ export default function FeaturedProjects({projects, locale}: {projects: Project[
                     )}
                   </div>
                   <h3 className="font-display font-semibold group-hover:text-brand-500 transition-colors">
-                    {project.title?.[l] || project.title?.en || 'Untitled'}
+                    {project.title[l]}
                   </h3>
                 </div>
               </Link>

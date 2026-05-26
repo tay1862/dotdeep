@@ -1,29 +1,27 @@
 import Link from 'next/link'
 import {useTranslations} from 'next-intl'
-import {type PortableTextBlock} from 'next-sanity'
 
-import PortableText from '@/app/components/PortableText'
 import ScrollReveal from '@/app/components/ScrollReveal'
-import {getLocalizedValue, type LocalizedPortableText} from '@/sanity/lib/localized'
 
 interface PricingItem {
-  _id: string
-  name?: {en?: string; th?: string; lo?: string} | null
-  price?: number | null
-  currency?: string | null
-  description?: {en?: string; th?: string; lo?: string} | null
-  features?: Array<{en?: string; th?: string; lo?: string}> | null
+  id: string
+  name: {en: string; th: string; lo: string}
+  price: number | null
+  currency: string
+  description: {en: string; th: string; lo: string}
+  features: Array<{en: string; th: string; lo: string}>
+  popular: boolean
 }
 
 interface ServiceData {
-  _id: string
-  title?: {en?: string; th?: string; lo?: string} | null
-  slug?: string | null
-  shortDescription?: {en?: string; th?: string; lo?: string} | null
-  description?: LocalizedPortableText
-  icon?: string | null
-  features?: Array<{en?: string; th?: string; lo?: string}> | null
-  pricingItems?: PricingItem[] | null
+  id: string
+  title: {en: string; th: string; lo: string}
+  slug: string
+  shortDescription: {en: string; th: string; lo: string}
+  description: {en: string; th: string; lo: string}
+  icon: string
+  features: Array<{en: string; th: string; lo: string}>
+  pricingItems: PricingItem[]
 }
 
 export default function ServiceDetail({service, locale}: {service: ServiceData; locale: string}) {
@@ -31,8 +29,8 @@ export default function ServiceDetail({service, locale}: {service: ServiceData; 
   const tPricing = useTranslations('pricing')
   const l = locale as 'en' | 'th' | 'lo'
 
-  const title = service.title?.[l] || service.title?.en || 'Service'
-  const description = getLocalizedValue(service.description, l)
+  const title = service.title[l]
+  const description = service.description[l]
 
   const currencyFormat = (amount: number, currency: string) => {
     const symbols: Record<string, string> = {LAK: '₭', USD: '$', THB: '฿'}
@@ -56,14 +54,11 @@ export default function ServiceDetail({service, locale}: {service: ServiceData; 
         <ScrollReveal>
           <h1 className={`text-fluid-2xl lg:text-fluid-3xl font-display font-bold mb-4 ${locale === 'lo' ? 'font-lao' : ''}`}>{title}</h1>
           <p className={`text-lg text-[var(--on-surface-muted)] leading-relaxed mb-10 ${locale === 'lo' ? 'font-lao' : ''}`}>
-            {service.shortDescription?.[l] || service.shortDescription?.en || ''}
+            {service.shortDescription[l]}
           </p>
-          {description ? (
-            <PortableText
-              className="max-w-none prose-p:text-on-surface-muted prose-p:leading-relaxed"
-              value={description as PortableTextBlock[]}
-            />
-          ) : null}
+          {description && (
+            <p className="text-[var(--on-surface-muted)] leading-relaxed">{description}</p>
+          )}
         </ScrollReveal>
 
         {/* Features */}
@@ -75,7 +70,7 @@ export default function ServiceDetail({service, locale}: {service: ServiceData; 
                 {service.features.map((f, i) => (
                   <div key={i} className="flex items-start gap-3 p-4 rounded-xl border border-[var(--border-default)]">
                     <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand-500 shrink-0 mt-0.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
-                    <span className="text-sm">{f[l] || f.en || ''}</span>
+                    <span className="text-sm">{f[l]}</span>
                   </div>
                 ))}
               </div>
@@ -91,27 +86,25 @@ export default function ServiceDetail({service, locale}: {service: ServiceData; 
             </ScrollReveal>
             <div className="grid sm:grid-cols-2 gap-6 mb-14">
               {service.pricingItems.map((item, i) => (
-                <ScrollReveal key={item._id} delay={i * 80}>
+                <ScrollReveal key={item.id} delay={i * 80}>
                   <div className="p-6 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-raised)] h-full">
                     <h3 className="font-display font-semibold mb-1">
-                      {item.name?.[l] || item.name?.en || 'Package'}
+                      {item.name[l]}
                     </h3>
                     {item.price != null && item.currency && (
                       <p className="text-2xl font-bold text-brand-500 mb-3">
                         {currencyFormat(item.price, item.currency)}
                       </p>
                     )}
-                    {item.description && (
-                      <p className="text-sm text-[var(--on-surface-muted)] mb-4">
-                        {item.description[l] || item.description.en || ''}
-                      </p>
-                    )}
+                    <p className="text-sm text-[var(--on-surface-muted)] mb-4">
+                      {item.description[l]}
+                    </p>
                     {item.features && item.features.length > 0 && (
                       <ul className="space-y-2">
                         {item.features.map((f, fi) => (
                           <li key={fi} className="flex items-start gap-2 text-sm">
                             <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand-500 shrink-0 mt-0.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
-                            {f[l] || f.en || ''}
+                            {f[l]}
                           </li>
                         ))}
                       </ul>

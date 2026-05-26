@@ -2,8 +2,8 @@ import {getTranslations} from 'next-intl/server'
 
 import {buildPageMetadata} from '@/app/lib/metadata'
 import {buildBreadcrumbJsonLd} from '@/app/lib/structured-data'
-import {sanityFetch} from '@/sanity/lib/live'
-import {aboutPageQuery, allTeamQuery} from '@/sanity/lib/queries'
+import {aboutData} from '@/app/data/about'
+import {team} from '@/app/data/team'
 import AboutContent from '@/app/components/about/AboutContent'
 
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}) {
@@ -20,10 +20,6 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 export default async function AboutPage({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params
   const t = await getTranslations({locale, namespace: 'about'})
-  const [{data: about}, {data: team}] = await Promise.all([
-    sanityFetch({query: aboutPageQuery}),
-    sanityFetch({query: allTeamQuery}),
-  ])
 
   const breadcrumb = buildBreadcrumbJsonLd(
     [{name: 'Home', path: '/'}, {name: t('title'), path: '/about'}],
@@ -33,7 +29,7 @@ export default async function AboutPage({params}: {params: Promise<{locale: stri
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(breadcrumb)}} />
-      <AboutContent about={about} team={team || []} locale={locale} />
+      <AboutContent about={aboutData} team={team} locale={locale} />
     </>
   )
 }
