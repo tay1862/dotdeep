@@ -12,7 +12,12 @@ export function proxy(request: NextRequest) {
   const {pathname} = request.nextUrl
 
   if (pathname.startsWith('/admin')) {
-    if (pathname === '/admin/login') return NextResponse.next()
+    if (pathname === '/admin/login') {
+      // Tell the layout this is the public login page — skips auth redirect
+      const requestHeaders = new Headers(request.headers)
+      requestHeaders.set('x-admin-is-login', '1')
+      return NextResponse.next({request: {headers: requestHeaders}})
+    }
 
     // Check for any Supabase auth session cookie (full verification in admin layout)
     const hasSession = request.cookies.getAll().some(

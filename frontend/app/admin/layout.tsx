@@ -1,3 +1,4 @@
+import {headers} from 'next/headers'
 import {redirect} from 'next/navigation'
 import {createSupabaseServerClient} from '@/app/lib/supabase-server'
 import Sidebar from './_components/Sidebar'
@@ -5,6 +6,12 @@ import Sidebar from './_components/Sidebar'
 export const metadata = {title: 'Admin — DotDeep'}
 
 export default async function AdminLayout({children}: {children: React.ReactNode}) {
+  const h = await headers()
+  const isLoginPage = h.get('x-admin-is-login') === '1'
+
+  // Login page renders standalone — no auth check, no sidebar
+  if (isLoginPage) return <>{children}</>
+
   const supabase = await createSupabaseServerClient()
   const {data: {user}} = await supabase.auth.getUser()
   if (!user) redirect('/admin/login')
