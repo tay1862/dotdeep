@@ -57,7 +57,6 @@ export default async function ProjectsPage() {
                 <button
                   type="submit"
                   className="px-3 py-1.5 text-xs bg-red-900/40 hover:bg-red-900/70 text-red-400 rounded-md transition-colors"
-                  onClick={(e) => {if (!confirm('Delete this project?')) e.preventDefault()}}
                 >
                   Delete
                 </button>

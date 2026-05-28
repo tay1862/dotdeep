@@ -43,4 +43,5 @@ export async function deleteTeamMemberAction(id: string) {
   const {error} = await supabaseAdmin.from('team_members').delete().eq('id', id)
   if (error) throw new Error(error.message)
   revalidatePath('/', 'layout')
+  redirect('/admin/team')
 }

@@ -47,10 +47,12 @@ export async function deleteProjectAction(id: string) {
   const {error} = await supabaseAdmin.from('projects').delete().eq('id', id)
   if (error) throw new Error(error.message)
   revalidatePath('/', 'layout')
+  redirect('/admin/projects')
 }
 
 export async function toggleFeaturedAction(id: string, featured: boolean) {
   const {error} = await supabaseAdmin.from('projects').update({featured}).eq('id', id)
   if (error) throw new Error(error.message)
   revalidatePath('/', 'layout')
+  redirect('/admin/projects')
 }

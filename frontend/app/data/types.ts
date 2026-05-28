@@ -41,7 +41,7 @@ export interface Project {
   slug: string
   title: LocalizedString
   description: LocalizedString
-  category: 'graphic' | 'web' | 'uiux' | 'video'
+  category: string
   coverUrl: string | null
   imageUrls: string[]
   client: string | null

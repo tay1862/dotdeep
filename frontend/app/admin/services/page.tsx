@@ -34,7 +34,6 @@ export default async function ServicesPage() {
                 <button
                   type="submit"
                   className="px-3 py-1.5 text-xs bg-red-900/40 hover:bg-red-900/70 text-red-400 rounded-md transition-colors"
-                  onClick={(e) => {if (!confirm('Delete this service?')) e.preventDefault()}}
                 >
                   Delete
                 </button>

@@ -47,7 +47,6 @@ export default async function TeamPage() {
                 <button
                   type="submit"
                   className="px-3 py-1.5 text-xs bg-red-900/40 hover:bg-red-900/70 text-red-400 rounded-md transition-colors"
-                  onClick={(e) => {if (!confirm('Delete this member?')) e.preventDefault()}}
                 >
                   Delete
                 </button>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import {deletePricingItemAction} from '@/app/admin/_actions/pricing'
 import {getServices} from '@/app/lib/db/services'
 
 export default async function PricingPage() {
@@ -35,12 +36,22 @@ export default async function PricingPage() {
                         {item.popular && <span className="ml-2 text-yellow-400">★ Popular</span>}
                       </p>
                     </div>
-                    <Link
-                      href={`/admin/pricing/${service.id}/${item.id}`}
-                      className="px-3 py-1.5 text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-md transition-colors"
-                    >
-                      Edit
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`/admin/pricing/${service.id}/${item.id}`}
+                        className="px-3 py-1.5 text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-md transition-colors"
+                      >
+                        Edit
+                      </Link>
+                      <form action={deletePricingItemAction.bind(null, item.id)}>
+                        <button
+                          type="submit"
+                          className="px-3 py-1.5 text-xs bg-red-900/40 hover:bg-red-900/70 text-red-400 rounded-md transition-colors"
+                        >
+                          Delete
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 ))}
               </div>

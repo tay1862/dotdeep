@@ -53,4 +53,5 @@ export async function deleteServiceAction(id: string) {
   const {error} = await supabaseAdmin.from('services').delete().eq('id', id)
   if (error) throw new Error(error.message)
   revalidatePath('/', 'layout')
+  redirect('/admin/services')
 }
